@@ -40,7 +40,7 @@ export default function ProjectOverlay({
         initial: { y: "100%" },
         animate: { y: 0 },
         exit: { y: "100%" },
-        transition: { type: "spring" as const, stiffness: 300, damping: 32 },
+        transition: { type: "spring" as const, stiffness: 220, damping: 35 },
       }
     : {
         initial: { opacity: 1 },

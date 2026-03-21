@@ -10,8 +10,8 @@ import { Project } from "@/types/project";
 
 const springTransition = {
   type: "spring" as const,
-  stiffness: 280,
-  damping: 26,
+  stiffness: 220,
+  damping: 35,
 };
 
 export default function Home() {
@@ -23,10 +23,10 @@ export default function Home() {
         className="flex flex-col md:flex-row w-full bg-background"
         style={{ minHeight: "100dvh" }}
       >
-        {/* Left bio — desktop only, slides out when a project is selected */}
+        {/* Left bio — desktop only, collapses to 1 strip column when a project is selected */}
         <motion.div
           className="hidden md:flex flex-col justify-center overflow-hidden"
-          animate={{ width: selectedProject ? "0vw" : "50vw" }}
+          animate={{ width: selectedProject ? "calc(100vw / 24)" : "50vw" }}
           transition={springTransition}
           style={{
             backgroundColor: "#0a0a0a",
@@ -36,7 +36,7 @@ export default function Home() {
             top: 0,
           }}
         >
-          <LeftBio />
+          <LeftBio collapsed={!!selectedProject} />
         </motion.div>
 
         {/* Right column — gallery + mobile bio */}

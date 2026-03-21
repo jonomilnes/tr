@@ -12,8 +12,8 @@ interface ProjectDetailPanelProps {
 
 const springTransition = {
   type: "spring" as const,
-  stiffness: 280,
-  damping: 26,
+  stiffness: 220,
+  damping: 35,
 };
 
 const BORDER = "1px solid rgba(255,255,255,0.50)";
@@ -33,7 +33,7 @@ export default function ProjectDetailPanel({
     <motion.div
       key={project.id}
       initial={{ flexGrow: 0 }}
-      animate={{ flexGrow: 12 }}
+      animate={{ flexGrow: 17 }}
       exit={{ flexGrow: 0 }}
       transition={springTransition}
       style={{
@@ -45,13 +45,16 @@ export default function ProjectDetailPanel({
         position: "relative",
       }}
     >
-      {/* Scrollable inner */}
+      {/* Scrollable inner — content centred: 3 empty / 11 content / 3 empty */}
       <div
         className="scrollbar-hide"
         style={{
           height: "100%",
           overflowY: "auto",
-          padding: "1.5rem",
+          paddingTop: "1.5rem",
+          paddingBottom: "1.5rem",
+          paddingLeft: "calc(3 * 100vw / 24)",
+          paddingRight: "calc(3 * 100vw / 24)",
         }}
       >
         {/* Close button */}

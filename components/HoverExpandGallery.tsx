@@ -22,9 +22,9 @@ export default function HoverExpandGallery({
 }: HoverExpandGalleryProps) {
   const [expandedId, setExpandedId] = useState<string>(projects[0].id);
 
-  // When a project is selected, lock the expanded panel to it.
-  // Hovering other panels does not change the expanded state.
-  const effectiveExpandedId = selectedProject?.id ?? expandedId;
+  // When a project is selected, all panels collapse to strips (no image shown).
+  // Hovering is locked. effectiveExpandedId = null collapses all.
+  const effectiveExpandedId = selectedProject ? null : expandedId;
 
   const handleHover = (id: string) => {
     if (!selectedProject) setExpandedId(id);

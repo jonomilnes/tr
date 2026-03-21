@@ -12,8 +12,8 @@ interface MobileAccordionProps {
 
 const springTransition = {
   type: "spring" as const,
-  stiffness: 280,
-  damping: 26,
+  stiffness: 220,
+  damping: 35,
 };
 
 const ROW_BORDER = "1px solid rgba(255,255,255,0.50)";

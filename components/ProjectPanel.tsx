@@ -17,8 +17,8 @@ interface ProjectPanelProps {
 
 const springTransition = {
   type: "spring" as const,
-  stiffness: 280,
-  damping: 26,
+  stiffness: 220,
+  damping: 35,
 };
 
 // 12-column grid: expanded = 7 cols (1 strip + 6 image), collapsed = 1 col each.
