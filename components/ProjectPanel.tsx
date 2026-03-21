@@ -169,11 +169,8 @@ export default function ProjectPanel({
         </span>
       </div>
 
-      {/* Image — always in DOM, opacity 0 when collapsed */}
-      <motion.div
-        layoutId={project.id}
-        animate={{ opacity: isExpanded ? 1 : 0 }}
-        transition={{ duration: 0.25 }}
+      {/* Image — always in DOM, hidden when collapsed */}
+      <div
         style={{
           position: "absolute",
           top: 0,
@@ -181,6 +178,7 @@ export default function ProjectPanel({
           bottom: 0,
           left: STRIP_W,
           overflow: "hidden",
+          opacity: isExpanded ? 1 : 0,
           pointerEvents: isExpanded ? "auto" : "none",
         }}
       >
@@ -192,7 +190,7 @@ export default function ProjectPanel({
           sizes="(max-width: 768px) 80vw, 40vw"
           priority={isExpanded}
         />
-      </motion.div>
+      </div>
     </div>
   );
 }
