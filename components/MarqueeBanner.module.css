@@ -1,0 +1,35 @@
+.wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  width: max-content;
+  animation: marquee 22s linear infinite;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  color: white;
+  opacity: 0.7;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.item svg {
+  height: 100%;
+  width: auto;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

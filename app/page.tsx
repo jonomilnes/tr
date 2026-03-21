@@ -5,6 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import LeftBio from "@/components/LeftBio";
 import HoverExpandGallery from "@/components/HoverExpandGallery";
 import ProjectOverlay from "@/components/ProjectOverlay";
+import MarqueeBanner from "@/components/MarqueeBanner";
 import { projects } from "@/data/projects";
 import { Project } from "@/types/project";
 
@@ -91,6 +92,9 @@ export default function Home() {
               </p>
             </div>
           </div>
+
+          {/* Marquee — mobile bio */}
+          <MarqueeBanner />
 
           {/* Gallery */}
           <HoverExpandGallery

@@ -1,3 +1,5 @@
+import MarqueeBanner from "./MarqueeBanner";
+
 interface LeftBioProps {
   collapsed?: boolean;
   onClose?: () => void;
@@ -75,23 +77,22 @@ export default function LeftBio({ collapsed = false, onClose }: LeftBioProps) {
     );
   }
 
-  // Full bio
+  // Full bio — flex column, marquee at the bottom
   return (
-    <div className="flex items-center p-6 h-full">
-      <div className="flex h-full flex-col justify-between">
-        <div>
+    <div className="flex flex-col h-full overflow-hidden">
+      {/* H1 for SEO — visually hidden */}
+      <h1 className="sr-only">Tamara Roper</h1>
+
+      <div className="flex flex-col justify-between flex-1 p-6 min-h-0">
+        {/* Top row: image + links top-right */}
+        <div className="flex justify-between items-start">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/tr.png" width="64" alt="" />
-          <h1
-            className="text-text-primary leading-none font-semibold mb-2"
-            style={{ fontSize: "1rem", letterSpacing: "-0.03em" }}
-          >
-            Tamara Roper
-          </h1>
-          <div className="flex flex-col">
+          <div className="flex flex-col items-end gap-1">
             <a
-              className="text-text-muted hover:text-text-primary mb-2"
+              className="text-text-muted hover:text-text-primary"
               href="mailto:tamara_r@live.co.uk"
+              style={{ fontSize: "1rem" }}
             >
               tamara_r@live.co.uk
             </a>
@@ -99,11 +100,14 @@ export default function LeftBio({ collapsed = false, onClose }: LeftBioProps) {
               className="text-text-muted hover:text-text-primary"
               href="https://www.linkedin.com/in/tamara-roper-4097abaa"
               target="_blank"
+              style={{ fontSize: "1rem" }}
             >
               LinkedIn
             </a>
           </div>
         </div>
+
+        {/* Bio text — pushed to bottom */}
         <div
           className="text-text-muted"
           style={{
@@ -133,6 +137,11 @@ export default function LeftBio({ collapsed = false, onClose }: LeftBioProps) {
             biggest companies.
           </p>
         </div>
+      </div>
+
+      {/* Marquee — full width of the bio container, outside the padding */}
+      <div className="pb-6">
+        <MarqueeBanner />
       </div>
     </div>
   );
