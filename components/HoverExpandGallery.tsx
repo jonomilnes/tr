@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import { Project } from "@/types/project";
 import ProjectPanel from "./ProjectPanel";
 import ProjectDetailPanel from "./ProjectDetailPanel";
@@ -22,16 +21,14 @@ export default function HoverExpandGallery({
 }: HoverExpandGalleryProps) {
   const [expandedId, setExpandedId] = useState<string>(projects[0].id);
 
-  // When a project is selected, all panels collapse to strips (no image shown).
-  // Hovering is locked. effectiveExpandedId = null collapses all.
+  // When a project is selected all panels collapse to strips — no image shown.
   const effectiveExpandedId = selectedProject ? null : expandedId;
 
   const handleHover = (id: string) => {
     if (!selectedProject) setExpandedId(id);
   };
 
-  // Desktop: one click opens the detail (or closes if already selected).
-  // Clicking a different collapsed panel while detail is open switches directly.
+  // One click: expand + open detail. Click selected again: close.
   const handleDesktopClick = (project: Project) => {
     if (selectedProject?.id === project.id) {
       onClose();
@@ -41,7 +38,7 @@ export default function HoverExpandGallery({
     }
   };
 
-  // Mobile: tap to expand, tap again (expanded) to open overlay.
+  // Mobile: tap to expand, tap expanded to open overlay.
   const handleMobileClick = (project: Project) => {
     if (expandedId === project.id) {
       onOpen(project);
@@ -58,27 +55,24 @@ export default function HoverExpandGallery({
         style={{ height: "100dvh" }}
       >
         {projects.map((project, i) => (
-          <AnimatePresence key={project.id} mode="sync">
-            <>
-              <ProjectPanel
-                project={project}
-                isExpanded={effectiveExpandedId === project.id}
-                isLast={i === projects.length - 1 && !selectedProject}
-                onHover={() => handleHover(project.id)}
-                onLeave={() => {}}
-                onClick={() => handleDesktopClick(project)}
-              />
-
-              {/* Detail panel — inserted immediately after the selected panel */}
-              {selectedProject?.id === project.id && (
-                <ProjectDetailPanel
-                  key={`detail-${project.id}`}
-                  project={selectedProject}
-                  onClose={onClose}
-                />
-              )}
-            </>
-          </AnimatePresence>
+          // Each panel is immediately followed by its detail panel.
+          // Detail panels always exist in the DOM; flexGrow drives visibility.
+          // This avoids mount/unmount conflicts with AnimatePresence.
+          <div key={project.id} style={{ display: "contents" }}>
+            <ProjectPanel
+              project={project}
+              isExpanded={effectiveExpandedId === project.id}
+              isLast={i === projects.length - 1}
+              onHover={() => handleHover(project.id)}
+              onLeave={() => {}}
+              onClick={() => handleDesktopClick(project)}
+            />
+            <ProjectDetailPanel
+              project={project}
+              isActive={selectedProject?.id === project.id}
+              onClose={onClose}
+            />
+          </div>
         ))}
       </div>
 

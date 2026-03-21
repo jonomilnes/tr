@@ -7,6 +7,7 @@ import { Project } from "@/types/project";
 
 interface ProjectDetailPanelProps {
   project: Project;
+  isActive: boolean;
   onClose: () => void;
 }
 
@@ -18,34 +19,35 @@ const springTransition = {
 
 const BORDER = "1px solid rgba(255,255,255,0.50)";
 
+// Content is centred within the 17 columns: 3 empty / 11 content / 3 empty
+const INNER_PADDING = "calc(3 * 100vw / 24)";
+
 export default function ProjectDetailPanel({
   project,
+  isActive,
   onClose,
 }: ProjectDetailPanelProps) {
   const [activeImage, setActiveImage] = useState(project.image);
 
-  // Reset active image when project changes
   useEffect(() => {
     setActiveImage(project.image);
   }, [project.image]);
 
   return (
     <motion.div
-      key={project.id}
-      initial={{ flexGrow: 0 }}
-      animate={{ flexGrow: 17 }}
-      exit={{ flexGrow: 0 }}
+      animate={{ flexGrow: isActive ? 17 : 0 }}
       transition={springTransition}
       style={{
         flexBasis: 0,
         flexShrink: 0,
         height: "100%",
         overflow: "hidden",
-        borderLeft: BORDER,
-        position: "relative",
+        // Only show border when the panel has width
+        borderLeft: isActive ? BORDER : "none",
+        pointerEvents: isActive ? "auto" : "none",
       }}
     >
-      {/* Scrollable inner — content centred: 3 empty / 11 content / 3 empty */}
+      {/* Scrollable inner with centred content */}
       <div
         className="scrollbar-hide"
         style={{
@@ -53,8 +55,8 @@ export default function ProjectDetailPanel({
           overflowY: "auto",
           paddingTop: "1.5rem",
           paddingBottom: "1.5rem",
-          paddingLeft: "calc(3 * 100vw / 24)",
-          paddingRight: "calc(3 * 100vw / 24)",
+          paddingLeft: INNER_PADDING,
+          paddingRight: INNER_PADDING,
         }}
       >
         {/* Close button */}
@@ -120,8 +122,8 @@ export default function ProjectDetailPanel({
             alt={project.title}
             fill
             className="object-cover"
-            sizes="25vw"
-            priority
+            sizes="45vw"
+            priority={isActive}
           />
         </div>
 
