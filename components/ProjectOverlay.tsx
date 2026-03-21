@@ -45,8 +45,8 @@ export default function ProjectOverlay({
     : {
         initial: { opacity: 1 },
         animate: { opacity: 1 },
-        exit: { opacity: 0 },
-        transition: { duration: 0.15 },
+        exit: { opacity: 1 },
+        transition: { duration: 0 },
       };
 
   return (
@@ -96,9 +96,8 @@ export default function ProjectOverlay({
           </p>
         </div>
 
-        {/* Hero image with layoutId */}
-        <motion.div
-          layoutId={project.id}
+        {/* Hero image */}
+        <div
           className="relative w-full overflow-hidden mb-6"
           style={{ maxHeight: "60vh", height: "60vh", borderRadius: "10px" }}
         >
@@ -110,7 +109,7 @@ export default function ProjectOverlay({
             sizes="(max-width: 768px) 100vw, 1200px"
             priority
           />
-        </motion.div>
+        </div>
 
         {/* Gallery thumbnails */}
         <div
