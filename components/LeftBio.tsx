@@ -3,8 +3,9 @@ export default function LeftBio() {
     <div className="flex items-center p-6 h-full">
       <div className="flex h-full flex-col justify-between">
         <div>
+          <img src="/images/tr.png" width="64"></img>
           <h1
-            className="text-text-primary leading-none font-semibold mb-2"
+            className="text-text-primary leading-none font-semibold mb-2 text-opacity-0"
             style={{ fontSize: "1rem", letterSpacing: "-0.03em" }}
           >
             Tamara Roper

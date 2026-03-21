@@ -2,11 +2,11 @@ import { Project } from "@/types/project";
 
 export const projects: Project[] = [
   {
-    id: "brand-identity",
-    title: "Brand Identity",
+    id: "AlphaSense",
+    title: "AlphaSense",
     year: "2024",
     description: "Visual identity for a fintech startup",
-    image: "https://picsum.photos/seed/brand/800/1200",
+    image: "/images/alphasense-ooh-1.png",
     galleryImages: [
       "https://picsum.photos/seed/brand2/1200/800",
       "https://picsum.photos/seed/brand3/1200/800",
