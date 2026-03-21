@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Project } from "@/types/project";
 import ProjectPanel from "./ProjectPanel";
+import MobileAccordion from "./MobileAccordion";
 
 interface HoverExpandGalleryProps {
   projects: Project[];
@@ -29,7 +30,7 @@ export default function HoverExpandGallery({
 
   return (
     <>
-      {/* Desktop: vertical flex row of panels, fills 100dvh */}
+      {/* Desktop: horizontal flex row of panels filling 100dvh */}
       <div
         className="hidden md:flex w-full overflow-hidden"
         style={{ height: "100dvh" }}
@@ -47,23 +48,13 @@ export default function HoverExpandGallery({
         ))}
       </div>
 
-      {/* Mobile: horizontal snap scroll */}
-      <div
-        className="flex md:hidden w-full overflow-x-auto scrollbar-hide"
-        style={{ scrollSnapType: "x mandatory" }}
-      >
-        {projects.map((project, i) => (
-          <ProjectPanel
-            key={project.id}
-            project={project}
-            isExpanded={expandedId === project.id}
-            isLast={i === projects.length - 1}
-            onHover={() => handleHover(project.id)}
-            onLeave={() => {}}
-            onClick={() => handleClick(project)}
-            isMobile
-          />
-        ))}
+      {/* Mobile: vertical accordion */}
+      <div className="flex md:hidden w-full flex-col">
+        <MobileAccordion
+          projects={projects}
+          expandedId={expandedId}
+          onClick={handleClick}
+        />
       </div>
     </>
   );

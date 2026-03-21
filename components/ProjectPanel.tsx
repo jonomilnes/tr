@@ -21,17 +21,15 @@ const springTransition = {
   damping: 26,
 };
 
-// Gap between image and panel edges on expanded panels
-const IMG_INSET = 10;
-
 // 12-column grid: expanded = 7 cols (1 strip + 6 image), collapsed = 1 col each.
 // Right column = 50vw. One column = 50vw / 12.
 const STRIP_W = "calc(50vw / 12)";
 
+const BORDER = "1px solid rgba(255,255,255,0.50)";
+
 export default function ProjectPanel({
   project,
   isExpanded,
-  isLast,
   onHover,
   onLeave,
   onClick,
@@ -49,7 +47,6 @@ export default function ProjectPanel({
   };
 
   const titleColor = isExpanded ? "#f0f0f0" : hovered ? "#c9a96e" : "#888";
-  const borderRight = isLast ? "none" : "1px solid rgba(255,255,255,0.15)";
 
   if (isMobile) {
     return (
@@ -62,17 +59,15 @@ export default function ProjectPanel({
         onClick={onClick}
         style={{
           position: "relative",
-          backgroundColor: "#111",
           height: "100svh",
           width: "80vw",
           flexShrink: 0,
           scrollSnapAlign: "start",
-          borderRight,
+          borderLeft: BORDER,
           overflow: "hidden",
           cursor: "pointer",
         }}
       >
-        {/* Image — always rendered, shown only when expanded */}
         <motion.div
           layoutId={project.id}
           animate={{ opacity: isExpanded ? 1 : 0 }}
@@ -89,7 +84,6 @@ export default function ProjectPanel({
           />
         </motion.div>
 
-        {/* Title strip — bottom-centered */}
         <div
           style={{
             position: "absolute",
@@ -105,8 +99,8 @@ export default function ProjectPanel({
             style={{
               writingMode: "vertical-rl",
               transform: "rotate(180deg)",
-              fontSize: "14px",
-              fontWeight: 500,
+              fontSize: "1rem",
+              fontWeight: 400,
               color: titleColor,
               transition: "color 0.2s ease",
             }}
@@ -118,7 +112,7 @@ export default function ProjectPanel({
     );
   }
 
-  // ── Desktop layout ───────────────────────────────────────────────────────
+  // ── Desktop layout ──────────────────────────────────────────────────────
   return (
     <motion.div
       layout
@@ -130,16 +124,15 @@ export default function ProjectPanel({
       style={{
         position: "relative",
         height: "100%",
-        backgroundColor: "#111",
         display: "flex",
         flexBasis: 0,
         minWidth: 0,
         cursor: "pointer",
         overflow: "hidden",
-        borderRight,
+        borderLeft: BORDER,
       }}
     >
-      {/* ── Text strip ── fixed width = one collapsed panel ── */}
+      {/* Text strip — fixed width = one collapsed panel */}
       <div
         style={{
           width: STRIP_W,
@@ -148,18 +141,17 @@ export default function ProjectPanel({
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          padding: "16px 0",
+          padding: "1.5rem 0",
           position: "relative",
           zIndex: 2,
         }}
       >
-        {/* Year — top, vertical, only when expanded */}
         {isExpanded && (
           <span
             style={{
               writingMode: "vertical-rl",
               transform: "rotate(180deg)",
-              fontSize: "11px",
+              fontSize: "1rem",
               color: "#a0a0a0",
               letterSpacing: "0.06em",
               fontVariantNumeric: "tabular-nums",
@@ -170,16 +162,14 @@ export default function ProjectPanel({
           </span>
         )}
 
-        {/* Pushes title to bottom */}
         <div style={{ flex: 1 }} />
 
-        {/* Title — bottom, vertical, always shown */}
         <span
           style={{
             writingMode: "vertical-rl",
             transform: "rotate(180deg)",
-            fontSize: "15px",
-            fontWeight: 500,
+            fontSize: "1rem",
+            fontWeight: 400,
             color: titleColor,
             letterSpacing: "0.01em",
             whiteSpace: "nowrap",
@@ -191,18 +181,17 @@ export default function ProjectPanel({
         </span>
       </div>
 
-      {/* ── Image ── always in DOM, opacity-fades in/out ── */}
+      {/* Image — always in DOM, fades in when expanded */}
       <motion.div
         layoutId={project.id}
         animate={{ opacity: isExpanded ? 1 : 0 }}
         transition={{ duration: 0.25 }}
         style={{
           position: "absolute",
-          top: IMG_INSET,
-          right: IMG_INSET,
-          bottom: IMG_INSET,
+          top: 0,
+          right: 0,
+          bottom: 0,
           left: STRIP_W,
-          borderRadius: 10,
           overflow: "hidden",
           pointerEvents: isExpanded ? "auto" : "none",
         }}

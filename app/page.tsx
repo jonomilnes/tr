@@ -42,24 +42,54 @@ export default function Home() {
         >
           {/* Mobile bio — shown only on mobile */}
           <div
-            className="flex md:hidden flex-col justify-center py-16 px-6"
+            className="flex md:hidden flex-col justify-center p-6"
             style={{ backgroundColor: "#0a0a0a" }}
           >
             <h1
-              className="font-serif text-text-primary mb-4 leading-none"
-              style={{ fontSize: "clamp(40px, 10vw, 64px)" }}
+              className="text-text-primary leading-none font-semibold mb-2"
+              style={{ fontSize: "1rem", letterSpacing: "-0.03em" }}
             >
               Tamara Roper
             </h1>
-            <p
-              className="font-inter text-text-muted"
-              style={{ fontSize: "15px", lineHeight: "1.7", maxWidth: "380px" }}
+            <div className="flex flex-col">
+              <a
+                className="text-text-muted hover:text-text-primary mb-2"
+                href="mailto:tamara_r@live.co.uk"
+              >
+                tamara_r@live.co.uk
+              </a>
+              <a
+                className="text-text-muted hover:text-text-primary"
+                href="https://www.linkedin.com/in/tamara-roper-4097abaa"
+                target="_blank"
+              >
+                LinkedIn
+              </a>
+            </div>
+            <div
+              className="text-text-muted mt-12"
+              style={{ fontSize: "1rem", lineHeight: "1.7", fontWeight: 400 }}
             >
-              Hello. I&apos;m Tamara, currently Associate Copy Director at
-              Saffron, Madrid. I lead verbal identity across the agency,
-              bridging the gap between strategy and creative, managing and
-              mentoring within a team of 15.
-            </p>
+              <p className="mb-2">Hello.</p>
+              <p className="mb-2">
+                I&apos;m Tamara, currently Associate Copy Director at{" "}
+                <a
+                  href="https://saffron-consultants.com/"
+                  target="_blank"
+                  className="hover:text-text-primary"
+                >
+                  Saffron
+                </a>
+                , Madrid.
+              </p>
+              <p>
+                I lead verbal identity across the agency, bridging the gap
+                between strategy and creative, managing and mentoring within a
+                team of 15. In a week, I might consult on campaign ideation,
+                develop full-bodied creative, or present brand narratives to
+                some of the world&apos;s biggest companies.
+              </p>
+            </div>
           </div>
 
           {/* Gallery */}
