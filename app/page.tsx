@@ -1,50 +1,15 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import LeftBio from "@/components/LeftBio";
 import HoverExpandGallery from "@/components/HoverExpandGallery";
 import ProjectOverlay from "@/components/ProjectOverlay";
 import { projects } from "@/data/projects";
 import { Project } from "@/types/project";
 
-const springTransition = {
-  type: "spring" as const,
-  stiffness: 220,
-  damping: 35,
-};
-
-// How long content takes to fade out before the layout animation starts (ms)
-const FADE_OUT_MS = 120;
-// How long after the layout action fires before content fades back in (ms)
-const FADE_IN_DELAY_MS = 450;
-
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [contentVisible, setContentVisible] = useState(true);
-
-  /**
-   * Sequences: fade content out → run action (layout shifts) → fade content in.
-   * All layout-changing interactions on desktop go through this.
-   */
-  const handleTransition = useCallback((action: () => void) => {
-    setContentVisible(false);
-    setTimeout(() => {
-      action();
-      setTimeout(() => setContentVisible(true), FADE_IN_DELAY_MS);
-    }, FADE_OUT_MS);
-  }, []);
-
-  const handleOpen = useCallback(
-    (project: Project) =>
-      handleTransition(() => setSelectedProject(project)),
-    [handleTransition]
-  );
-
-  const handleClose = useCallback(
-    () => handleTransition(() => setSelectedProject(null)),
-    [handleTransition]
-  );
 
   return (
     <>
@@ -52,12 +17,11 @@ export default function Home() {
         className="flex flex-col md:flex-row w-full bg-background"
         style={{ minHeight: "100dvh" }}
       >
-        {/* Left bio — desktop only, collapses to 1 strip column when a project is selected */}
-        <motion.div
+        {/* Left bio — collapses instantly to 1 strip column when a project is selected */}
+        <div
           className="hidden md:flex flex-col justify-center overflow-hidden"
-          animate={{ width: selectedProject ? "calc(100vw / 24)" : "50vw" }}
-          transition={springTransition}
           style={{
+            width: selectedProject ? "calc(100vw / 24)" : "50vw",
             backgroundColor: "#0a0a0a",
             height: "100dvh",
             flexShrink: 0,
@@ -65,8 +29,8 @@ export default function Home() {
             top: 0,
           }}
         >
-          <LeftBio collapsed={!!selectedProject} contentVisible={contentVisible} />
-        </motion.div>
+          <LeftBio collapsed={!!selectedProject} />
+        </div>
 
         {/* Right column — gallery + mobile bio */}
         <div
@@ -128,11 +92,9 @@ export default function Home() {
           {/* Gallery */}
           <HoverExpandGallery
             projects={projects}
-            onOpen={handleOpen}
+            onOpen={(project) => setSelectedProject(project)}
             selectedProject={selectedProject}
-            onClose={handleClose}
-            onTransition={handleTransition}
-            contentVisible={contentVisible}
+            onClose={() => setSelectedProject(null)}
           />
         </div>
       </main>

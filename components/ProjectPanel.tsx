@@ -13,7 +13,6 @@ interface ProjectPanelProps {
   onLeave: () => void;
   onClick: () => void;
   isMobile?: boolean;
-  contentVisible?: boolean;
 }
 
 const springTransition = {
@@ -33,7 +32,6 @@ export default function ProjectPanel({
   onLeave,
   onClick,
   isMobile = false,
-  contentVisible = true,
 }: ProjectPanelProps) {
   const [hovered, setHovered] = useState(false);
 
@@ -59,6 +57,7 @@ export default function ProjectPanel({
           borderLeft: BORDER,
           overflow: "hidden",
           cursor: "pointer",
+          flexBasis: 0,
         }}
       >
         <motion.div
@@ -107,9 +106,7 @@ export default function ProjectPanel({
 
   // ── Desktop ──────────────────────────────────────────────────────────────
   return (
-    <motion.div
-      animate={{ flexGrow: isExpanded ? 7 : 1 }}
-      transition={springTransition}
+    <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
@@ -117,6 +114,7 @@ export default function ProjectPanel({
         position: "relative",
         height: "100%",
         display: "flex",
+        flexGrow: isExpanded ? 7 : 1,
         flexBasis: 0,
         minWidth: 0,
         cursor: "pointer",
@@ -124,7 +122,7 @@ export default function ProjectPanel({
         borderLeft: BORDER,
       }}
     >
-      {/* Text strip — border/bg always visible, text fades with contentVisible */}
+      {/* Text strip */}
       <div
         style={{
           width: STRIP_W,
@@ -148,8 +146,6 @@ export default function ProjectPanel({
               letterSpacing: "0.06em",
               fontVariantNumeric: "tabular-nums",
               flexShrink: 0,
-              opacity: contentVisible ? 1 : 0,
-              transition: "opacity 0.12s ease",
             }}
           >
             {project.year}
@@ -165,9 +161,8 @@ export default function ProjectPanel({
             color: titleColor,
             letterSpacing: "0.01em",
             whiteSpace: "nowrap",
-            transition: "color 0.2s ease, opacity 0.12s ease",
+            transition: "color 0.2s ease",
             flexShrink: 0,
-            opacity: contentVisible ? 1 : 0,
           }}
         >
           {project.title}
@@ -198,6 +193,6 @@ export default function ProjectPanel({
           priority={isExpanded}
         />
       </motion.div>
-    </motion.div>
+    </div>
   );
 }

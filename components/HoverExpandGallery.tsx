@@ -11,8 +11,6 @@ interface HoverExpandGalleryProps {
   onOpen: (project: Project) => void;
   selectedProject: Project | null;
   onClose: () => void;
-  onTransition: (action: () => void) => void;
-  contentVisible: boolean;
 }
 
 export default function HoverExpandGallery({
@@ -20,32 +18,25 @@ export default function HoverExpandGallery({
   onOpen,
   selectedProject,
   onClose,
-  onTransition,
-  contentVisible,
 }: HoverExpandGalleryProps) {
   const [expandedId, setExpandedId] = useState<string>(projects[0].id);
 
-  // When a project is selected all panels collapse to strips.
+  // When a project is selected all panels collapse to strips — no image shown.
   const effectiveExpandedId = selectedProject ? null : expandedId;
 
   const handleHover = (id: string) => {
     if (!selectedProject) setExpandedId(id);
   };
 
-  // Desktop: route every state-changing click through onTransition so
-  // content fades out before the layout shifts.
   const handleDesktopClick = (project: Project) => {
     if (selectedProject?.id === project.id) {
-      onClose(); // onClose is already transition-wrapped in page.tsx
+      onClose();
     } else {
-      onTransition(() => {
-        setExpandedId(project.id);
-        onOpen(project);
-      });
+      setExpandedId(project.id);
+      onOpen(project);
     }
   };
 
-  // Mobile: tap to expand, tap again to open overlay (no transition needed).
   const handleMobileClick = (project: Project) => {
     if (expandedId === project.id) {
       onOpen(project);
@@ -70,13 +61,11 @@ export default function HoverExpandGallery({
               onHover={() => handleHover(project.id)}
               onLeave={() => {}}
               onClick={() => handleDesktopClick(project)}
-              contentVisible={contentVisible}
             />
             <ProjectDetailPanel
               project={project}
               isActive={selectedProject?.id === project.id}
               onClose={onClose}
-              contentVisible={contentVisible}
             />
           </div>
         ))}

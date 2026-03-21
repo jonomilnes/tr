@@ -1,9 +1,8 @@
 interface LeftBioProps {
   collapsed?: boolean;
-  contentVisible?: boolean;
 }
 
-export default function LeftBio({ collapsed = false, contentVisible = true }: LeftBioProps) {
+export default function LeftBio({ collapsed = false }: LeftBioProps) {
   if (collapsed) {
     return (
       <div
@@ -14,8 +13,6 @@ export default function LeftBio({ collapsed = false, contentVisible = true }: Le
           flexDirection: "column",
           alignItems: "center",
           padding: "1.5rem 0",
-          opacity: contentVisible ? 1 : 0,
-          transition: "opacity 0.12s ease",
         }}
       >
         {/* LinkedIn — top, vertical (mirrors year position) */}
@@ -77,10 +74,7 @@ export default function LeftBio({ collapsed = false, contentVisible = true }: Le
 
   // Full bio
   return (
-    <div
-      className="flex items-center p-6 h-full"
-      style={{ opacity: contentVisible ? 1 : 0, transition: "opacity 0.12s ease" }}
-    >
+    <div className="flex items-center p-6 h-full">
       <div className="flex h-full flex-col justify-between">
         <div>
           {/* eslint-disable-next-line @next/next/no-img-element */}

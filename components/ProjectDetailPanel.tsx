@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { Project } from "@/types/project";
 
@@ -9,25 +8,15 @@ interface ProjectDetailPanelProps {
   project: Project;
   isActive: boolean;
   onClose: () => void;
-  contentVisible?: boolean;
 }
 
-const springTransition = {
-  type: "spring" as const,
-  stiffness: 220,
-  damping: 35,
-};
-
 const BORDER = "1px solid rgba(255,255,255,0.50)";
-
-// Content is centred within the 17 columns: 3 empty / 11 content / 3 empty
 const INNER_PADDING = "calc(3 * 100vw / 24)";
 
 export default function ProjectDetailPanel({
   project,
   isActive,
   onClose,
-  contentVisible = true,
 }: ProjectDetailPanelProps) {
   const [activeImage, setActiveImage] = useState(project.image);
 
@@ -36,20 +25,17 @@ export default function ProjectDetailPanel({
   }, [project.image]);
 
   return (
-    <motion.div
-      animate={{ flexGrow: isActive ? 17 : 0 }}
-      transition={springTransition}
+    <div
       style={{
+        flexGrow: isActive ? 17 : 0,
         flexBasis: 0,
         flexShrink: 0,
         height: "100%",
         overflow: "hidden",
-        // Only show border when the panel has width
         borderLeft: isActive ? BORDER : "none",
         pointerEvents: isActive ? "auto" : "none",
       }}
     >
-      {/* Scrollable inner with centred content — fades with contentVisible */}
       <div
         className="scrollbar-hide"
         style={{
@@ -59,8 +45,6 @@ export default function ProjectDetailPanel({
           paddingBottom: "1.5rem",
           paddingLeft: INNER_PADDING,
           paddingRight: INNER_PADDING,
-          opacity: contentVisible ? 1 : 0,
-          transition: "opacity 0.12s ease",
         }}
       >
         {/* Close button */}
@@ -89,7 +73,6 @@ export default function ProjectDetailPanel({
           </button>
         </div>
 
-        {/* Title */}
         <h2
           style={{
             fontSize: "clamp(1.25rem, 2vw, 2rem)",
@@ -103,7 +86,6 @@ export default function ProjectDetailPanel({
           {project.title}
         </h2>
 
-        {/* Year · Role */}
         <p
           className="font-mono"
           style={{ fontSize: "0.75rem", color: "#666", marginBottom: "1.5rem" }}
@@ -134,12 +116,7 @@ export default function ProjectDetailPanel({
         {/* Gallery thumbnails */}
         <div
           className="scrollbar-hide"
-          style={{
-            display: "flex",
-            gap: "0.5rem",
-            overflowX: "auto",
-            marginBottom: "2rem",
-          }}
+          style={{ display: "flex", gap: "0.5rem", overflowX: "auto", marginBottom: "2rem" }}
         >
           {[project.image, ...project.galleryImages].map((img, i) => (
             <button
@@ -155,24 +132,14 @@ export default function ProjectDetailPanel({
                 padding: 0,
                 background: "none",
                 border: "none",
-                outline:
-                  activeImage === img
-                    ? "2px solid #c9a96e"
-                    : "2px solid transparent",
+                outline: activeImage === img ? "2px solid #c9a96e" : "2px solid transparent",
               }}
             >
-              <Image
-                src={img}
-                alt={`${project.title} ${i + 1}`}
-                fill
-                className="object-cover"
-                sizes="80px"
-              />
+              <Image src={img} alt={`${project.title} ${i + 1}`} fill className="object-cover" sizes="80px" />
             </button>
           ))}
         </div>
 
-        {/* About */}
         <h3
           style={{
             fontSize: "0.7rem",
@@ -185,18 +152,10 @@ export default function ProjectDetailPanel({
         >
           About the project
         </h3>
-        <p
-          style={{
-            fontSize: "0.9rem",
-            color: "#a0a0a0",
-            lineHeight: 1.7,
-            marginBottom: "2rem",
-          }}
-        >
+        <p style={{ fontSize: "0.9rem", color: "#a0a0a0", lineHeight: 1.7, marginBottom: "2rem" }}>
           {project.body}
         </p>
 
-        {/* Definition list */}
         <dl>
           {[
             { label: "Role", value: project.role },
@@ -205,25 +164,14 @@ export default function ProjectDetailPanel({
             { label: "Deliverables", value: project.deliverables },
           ].map(({ label, value }) => (
             <div key={label} style={{ marginBottom: "1rem" }}>
-              <dt
-                style={{
-                  fontSize: "0.65rem",
-                  fontWeight: 500,
-                  color: "#666",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.08em",
-                  marginBottom: "0.2rem",
-                }}
-              >
+              <dt style={{ fontSize: "0.65rem", fontWeight: 500, color: "#666", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.2rem" }}>
                 {label}
               </dt>
-              <dd style={{ fontSize: "0.9rem", color: "#f0f0f0" }}>
-                {value}
-              </dd>
+              <dd style={{ fontSize: "0.9rem", color: "#f0f0f0" }}>{value}</dd>
             </div>
           ))}
         </dl>
       </div>
-    </motion.div>
+    </div>
   );
 }
