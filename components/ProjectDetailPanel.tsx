@@ -48,6 +48,7 @@ export default function ProjectDetailPanel({
           paddingRight: INNER_PADDING,
         }}
       >
+        <div className="max-w-prose mx-auto w-full">
         <h2
           style={{
             fontSize: "clamp(1.25rem, 2vw, 2rem)",
@@ -157,6 +158,7 @@ export default function ProjectDetailPanel({
             </div>
           ))}
         </dl>
+        </div>
       </div>
     </div>
   );
