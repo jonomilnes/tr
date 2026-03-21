@@ -37,22 +37,28 @@ export default function Home() {
         className="flex flex-col"
         style={{ width: "100%", flex: "1 1 auto" }}
       >
-        <div className="flex md:hidden" style={{ backgroundColor: "#121212" }}>
+        {/* ── Mobile bio ──────────────────────────────────────────────── */}
+        <div
+          className="flex md:hidden"
+          style={{
+            backgroundColor: "#121212",
+            position: selectedProject ? "sticky" : "relative",
+            top: 0,
+            zIndex: 10,
+          }}
+        >
           {selectedProject ? (
-            // Compact strip — sticky so it stays visible while scrolling detail
+            // Compact strip — 3-col grid keeps image truly centred
             <div
               onClick={() => setSelectedProject(null)}
               style={{
-                position: "sticky",
-                top: 0,
-                zIndex: 10,
                 height: "60px",
                 width: "100%",
-                display: "flex",
+                display: "grid",
+                gridTemplateColumns: "1fr auto 1fr",
                 alignItems: "center",
                 padding: "0 1rem",
                 cursor: "pointer",
-                backgroundColor: "#121212",
               }}
             >
               {/* Email — left */}
@@ -65,22 +71,20 @@ export default function Home() {
                 tamara_r@live.co.uk
               </a>
 
-              {/* Image — centre */}
-              <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/images/tr.png"
-                  alt=""
-                  style={{ height: "36px", width: "36px", objectFit: "cover" }}
-                />
-              </div>
+              {/* Image — centre (auto column) */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/tr.png"
+                alt=""
+                style={{ height: "36px", width: "36px", objectFit: "cover", display: "block" }}
+              />
 
               {/* LinkedIn — right */}
               <a
                 href="https://www.linkedin.com/in/tamara-roper-4097abaa"
                 target="_blank"
                 className="text-text-muted hover:text-text-primary"
-                style={{ fontSize: "0.85rem" }}
+                style={{ fontSize: "0.85rem", textAlign: "right", justifySelf: "end" }}
                 onClick={(e) => e.stopPropagation()}
               >
                 LinkedIn
