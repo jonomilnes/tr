@@ -8,6 +8,7 @@ import { Project } from "@/types/project";
 interface ProjectPanelProps {
   project: Project;
   isExpanded: boolean;
+  isLast: boolean;
   onHover: () => void;
   onLeave: () => void;
   onClick: () => void;
@@ -20,9 +21,15 @@ const springTransition = {
   damping: 26,
 };
 
+// Padding around the inset image
+const IMG_INSET = 10;
+// Width of the left text gutter (year + title live here)
+const GUTTER = 44;
+
 export default function ProjectPanel({
   project,
   isExpanded,
+  isLast,
   onHover,
   onLeave,
   onClick,
@@ -34,11 +41,12 @@ export default function ProjectPanel({
     setHovered(true);
     onHover();
   };
-
   const handleMouseLeave = () => {
     setHovered(false);
     onLeave();
   };
+
+  const titleColor = isExpanded ? "#f0f0f0" : hovered ? "#c9a96e" : "#888";
 
   return (
     <motion.div
@@ -48,7 +56,7 @@ export default function ProjectPanel({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      className="relative overflow-hidden cursor-pointer"
+      className="relative overflow-hidden cursor-pointer flex-shrink-0"
       style={{
         backgroundColor: "#111",
         height: isMobile ? "100svh" : "100%",
@@ -56,98 +64,88 @@ export default function ProjectPanel({
         flexShrink: isMobile ? 0 : undefined,
         scrollSnapAlign: isMobile ? "start" : undefined,
         minWidth: isMobile ? undefined : 0,
+        // White separator on the right of every panel except the last
+        borderRight: isLast ? "none" : "1px solid rgba(255,255,255,0.15)",
       }}
     >
-      {/* Base background image (blurred when collapsed, full when expanded) */}
-      <div className="absolute inset-0">
-        <Image
-          src={project.image}
-          alt={project.title}
-          fill
-          className="object-cover"
-          style={{
-            filter: isExpanded ? "none" : "blur(8px)",
-            opacity: isExpanded ? 1 : 0.15,
-            transition: "filter 0.3s ease, opacity 0.3s ease",
-          }}
-          sizes="(max-width: 768px) 80vw, 50vw"
-          priority={isExpanded}
-        />
-      </div>
+      {isExpanded ? (
+        <>
+          {/* Inset image with rounded corners — shifted right to leave text gutter */}
+          <motion.div
+            layoutId={project.id}
+            className="absolute overflow-hidden"
+            style={{
+              top: IMG_INSET,
+              right: IMG_INSET,
+              bottom: IMG_INSET,
+              left: GUTTER,
+              borderRadius: 10,
+            }}
+          >
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 80vw, 40vw"
+              priority
+            />
+          </motion.div>
 
-      {/* Shared layoutId image for overlay morphing — only when expanded */}
-      {isExpanded && (
-        <motion.div
-          layoutId={project.id}
-          className="absolute inset-0"
-          style={{ zIndex: 1 }}
-        >
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 80vw, 50vw"
-            priority
-          />
-        </motion.div>
-      )}
+          {/* Year — top of gutter, horizontal */}
+          <div
+            className="absolute"
+            style={{
+              top: IMG_INSET + 4,
+              left: 12,
+              fontSize: "11px",
+              color: "#a0a0a0",
+              fontVariantNumeric: "tabular-nums",
+              letterSpacing: "0.04em",
+            }}
+          >
+            {project.year}
+          </div>
 
-      {/* Gradient overlay — expanded only */}
-      {isExpanded && (
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%)",
-            zIndex: 2,
-          }}
-        />
-      )}
-
-      {/* Year — top right on expanded */}
-      {isExpanded && (
-        <div
-          className="absolute top-6 right-6 font-mono"
-          style={{ fontSize: "13px", color: "#a0a0a0", zIndex: 3 }}
-        >
-          {project.year}
-        </div>
-      )}
-
-      {/* Expanded: title + description at bottom left */}
-      {isExpanded && (
-        <div className="absolute bottom-8 left-8 right-8" style={{ zIndex: 3 }}>
-          <h2
-            className="font-serif text-white leading-tight mb-1"
-            style={{ fontSize: "36px" }}
+          {/* Title — bottom of gutter, rotated to read bottom→top */}
+          <div
+            className="absolute"
+            style={{
+              bottom: IMG_INSET + 4,
+              left: 12,
+              fontSize: "13px",
+              fontWeight: 500,
+              color: titleColor,
+              whiteSpace: "nowrap",
+              transformOrigin: "bottom left",
+              transform: "rotate(-90deg)",
+              letterSpacing: "0.01em",
+            }}
           >
             {project.title}
-          </h2>
-          <p className="font-inter" style={{ fontSize: "13px", color: "rgba(255,255,255,0.65)" }}>
-            {project.description}
-          </p>
-        </div>
-      )}
-
-      {/* Collapsed: vertically rotated title */}
-      {!isExpanded && (
-        <div
-          className="absolute inset-0 flex items-center justify-center"
-          style={{ zIndex: 3 }}
-        >
-          <span
-            className="font-inter uppercase tracking-widest select-none whitespace-nowrap"
+          </div>
+        </>
+      ) : (
+        <>
+          {/* Collapsed: no image. Title rotated, anchored to bottom */}
+          <div
+            className="absolute"
             style={{
-              fontSize: "11px",
-              color: hovered ? "#c9a96e" : "#666",
-              transform: "rotate(90deg)",
+              bottom: IMG_INSET + 4,
+              left: 12,
+              fontSize: "13px",
+              fontWeight: 500,
+              color: titleColor,
+              whiteSpace: "nowrap",
+              transformOrigin: "bottom left",
+              transform: "rotate(-90deg)",
+              letterSpacing: "0.01em",
               transition: "color 0.2s ease",
             }}
           >
             {project.title}
-          </span>
-        </div>
+          </div>
+        </>
       )}
     </motion.div>
   );

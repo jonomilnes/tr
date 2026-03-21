@@ -34,11 +34,12 @@ export default function HoverExpandGallery({
         className="hidden md:flex w-full overflow-hidden"
         style={{ height: "100dvh" }}
       >
-        {projects.map((project) => (
+        {projects.map((project, i) => (
           <ProjectPanel
             key={project.id}
             project={project}
             isExpanded={expandedId === project.id}
+            isLast={i === projects.length - 1}
             onHover={() => handleHover(project.id)}
             onLeave={() => {}}
             onClick={() => handleClick(project)}
@@ -51,11 +52,12 @@ export default function HoverExpandGallery({
         className="flex md:hidden w-full overflow-x-auto scrollbar-hide"
         style={{ scrollSnapType: "x mandatory" }}
       >
-        {projects.map((project) => (
+        {projects.map((project, i) => (
           <ProjectPanel
             key={project.id}
             project={project}
             isExpanded={expandedId === project.id}
+            isLast={i === projects.length - 1}
             onHover={() => handleHover(project.id)}
             onLeave={() => {}}
             onClick={() => handleClick(project)}

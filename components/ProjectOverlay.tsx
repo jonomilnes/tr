@@ -24,7 +24,6 @@ export default function ProjectOverlay({
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
-  // Reset active image when project changes
   useEffect(() => {
     setActiveImage(project.image);
   }, [project]);
@@ -52,41 +51,38 @@ export default function ProjectOverlay({
           border: "none",
           cursor: "pointer",
         }}
-        onMouseEnter={(e) =>
-          (e.currentTarget.style.color = "#f0f0f0")
-        }
-        onMouseLeave={(e) =>
-          (e.currentTarget.style.color = "#666")
-        }
+        onMouseEnter={(e) => (e.currentTarget.style.color = "#f0f0f0")}
+        onMouseLeave={(e) => (e.currentTarget.style.color = "#666")}
         aria-label="Close overlay"
       >
         ×
       </button>
 
-      <div
-        className="px-6 py-8 md:px-16 md:py-12 max-w-screen-xl mx-auto"
-      >
+      <div className="px-6 py-8 md:px-16 md:py-12 max-w-screen-xl mx-auto">
         {/* Header */}
         <div className="mb-10">
           <h1
-            className="font-serif text-text-primary leading-none mb-3"
-            style={{ fontSize: "clamp(40px, 6vw, 72px)" }}
+            className="text-text-primary leading-none mb-3 font-semibold"
+            style={{
+              fontSize: "clamp(40px, 6vw, 72px)",
+              letterSpacing: "-0.03em",
+            }}
           >
             {project.title}
           </h1>
           <p
-            className="font-mono text-text-subtle"
+            className="text-text-subtle font-mono"
             style={{ fontSize: "13px" }}
           >
             {project.year}&nbsp;·&nbsp;{project.role}
           </p>
         </div>
 
-        {/* Hero image with layoutId for morphing */}
+        {/* Hero image with layoutId */}
         <motion.div
           layoutId={project.id}
-          className="relative w-full rounded-lg overflow-hidden mb-6"
-          style={{ maxHeight: "60vh", height: "60vh" }}
+          className="relative w-full overflow-hidden mb-6"
+          style={{ maxHeight: "60vh", height: "60vh", borderRadius: "10px" }}
         >
           <Image
             src={activeImage}
@@ -107,11 +103,12 @@ export default function ProjectOverlay({
             <button
               key={i}
               onClick={() => setActiveImage(img)}
-              className="relative flex-shrink-0 rounded-md overflow-hidden"
+              className="relative flex-shrink-0 overflow-hidden"
               style={{
                 width: "280px",
                 height: "200px",
                 scrollSnapAlign: "start",
+                borderRadius: "8px",
                 outline:
                   activeImage === img
                     ? "2px solid #c9a96e"
@@ -133,25 +130,23 @@ export default function ProjectOverlay({
           ))}
         </div>
 
-        {/* Text content: two-column on desktop */}
+        {/* Text content */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
-          {/* Left: body */}
           <div className="md:col-span-3">
             <h2
-              className="font-inter uppercase tracking-widest text-text-subtle mb-4"
-              style={{ fontSize: "13px" }}
+              className="uppercase tracking-widest text-text-subtle mb-4"
+              style={{ fontSize: "12px", fontWeight: 500 }}
             >
               About the project
             </h2>
             <p
-              className="font-inter text-text-muted"
-              style={{ fontSize: "17px", lineHeight: "1.8" }}
+              className="text-text-muted"
+              style={{ fontSize: "17px", lineHeight: "1.8", fontWeight: 400 }}
             >
               {project.body}
             </p>
           </div>
 
-          {/* Right: definition list */}
           <div className="md:col-span-2">
             <dl>
               {[
@@ -160,16 +155,16 @@ export default function ProjectOverlay({
                 { label: "Year", value: project.year },
                 { label: "Deliverables", value: project.deliverables },
               ].map(({ label, value }) => (
-                <div key={label} className="mb-4">
+                <div key={label} className="mb-5">
                   <dt
-                    className="font-inter uppercase tracking-widest text-text-subtle"
-                    style={{ fontSize: "12px" }}
+                    className="uppercase tracking-widest text-text-subtle mb-1"
+                    style={{ fontSize: "11px", fontWeight: 500 }}
                   >
                     {label}
                   </dt>
                   <dd
-                    className="font-inter text-text-primary"
-                    style={{ fontSize: "16px" }}
+                    className="text-text-primary"
+                    style={{ fontSize: "15px", fontWeight: 400 }}
                   >
                     {value}
                   </dd>

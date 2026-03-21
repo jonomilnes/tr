@@ -3,17 +3,18 @@ export default function LeftBio() {
     <div className="flex items-center px-16 h-full">
       <div>
         <h1
-          className="font-serif text-text-primary mb-6 leading-none"
-          style={{ fontSize: "72px" }}
+          className="text-text-primary mb-6 leading-none font-semibold"
+          style={{ fontSize: "64px", letterSpacing: "-0.03em" }}
         >
           Tamara Roper
         </h1>
         <p
-          className="font-inter text-text-muted"
+          className="text-text-muted"
           style={{
             fontSize: "17px",
             maxWidth: "380px",
             lineHeight: "1.7",
+            fontWeight: 400,
           }}
         >
           Hello. I&apos;m Tamara, currently Associate Copy Director at Saffron,
