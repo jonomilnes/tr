@@ -5,7 +5,6 @@ import { AnimatePresence } from "framer-motion";
 import LeftBio from "@/components/LeftBio";
 import HoverExpandGallery from "@/components/HoverExpandGallery";
 import ProjectOverlay from "@/components/ProjectOverlay";
-import MarqueeBanner from "@/components/MarqueeBanner";
 import { projects } from "@/data/projects";
 import { Project } from "@/types/project";
 
@@ -96,11 +95,6 @@ export default function Home() {
                   LinkedIn
                 </a>
               </div>
-            </div>
-
-            {/* Marquee — full width, inside mobile bio, below links */}
-            <div className="pb-6">
-              <MarqueeBanner />
             </div>
           </div>
 

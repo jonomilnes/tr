@@ -1,5 +1,3 @@
-import MarqueeBanner from "./MarqueeBanner";
-
 interface LeftBioProps {
   collapsed?: boolean;
   onClose?: () => void;
@@ -77,7 +75,7 @@ export default function LeftBio({ collapsed = false, onClose }: LeftBioProps) {
     );
   }
 
-  // Full bio — flex column, marquee at the bottom
+  // Full bio — flex column
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* H1 for SEO — visually hidden */}
@@ -139,11 +137,6 @@ export default function LeftBio({ collapsed = false, onClose }: LeftBioProps) {
             LinkedIn
           </a>
         </div>
-      </div>
-
-      {/* Marquee — full width of the bio container, outside the padding */}
-      <div className="pb-6">
-        <MarqueeBanner />
       </div>
     </div>
   );
