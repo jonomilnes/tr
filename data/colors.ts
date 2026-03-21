@@ -1,17 +1,23 @@
 export interface ProjectColor {
   bg: string;
-  hover: string; // one shade darker than bg
-  text: string;
+  hover: string; // same hue, ~18% darker
+  text: string;  // same hue, very dark (~25% brightness)
 }
 
-// Ordered to avoid a rainbow progression:
-// blue → red → green → yellow → purple → orange
-// hover = bg lightness reduced by ~0.07
+// Derived from user-provided hex bases:
+// hover  = each RGB channel × 0.82
+// text   = each RGB channel × 0.25
 export const PROJECT_COLORS: ProjectColor[] = [
-  { bg: "oklch(0.682 0.176 252)", hover: "oklch(0.612 0.186 252)", text: "oklch(0.181 0.028 252)" }, // blue
-  { bg: "oklch(0.699 0.166 17)",  hover: "oklch(0.629 0.176 17)",  text: "oklch(0.195 0.03 17)"  }, // red
-  { bg: "oklch(0.676 0.167 145)", hover: "oklch(0.606 0.177 145)", text: "oklch(0.178 0.029 145)"}, // green
-  { bg: "oklch(0.78 0.171 91)",   hover: "oklch(0.71 0.181 91)",   text: "oklch(0.192 0.026 91)" }, // yellow
-  { bg: "oklch(0.69 0.174 295)",  hover: "oklch(0.62 0.184 295)",  text: "oklch(0.183 0.027 295)"}, // purple
-  { bg: "oklch(0.725 0.175 55)",  hover: "oklch(0.655 0.185 55)",  text: "oklch(0.188 0.028 55)" }, // orange
+  // 1. Lavender  #B698F2
+  { bg: "#B698F2", hover: "#957DC6", text: "#2E263D" },
+  // 2. Pink      #E6AAC0
+  { bg: "#E6AAC0", hover: "#BD8B9D", text: "#3A2B30" },
+  // 3. Amber     #EBB958
+  { bg: "#EBB958", hover: "#C19848", text: "#3B2E16" },
+  // 4. Yellow    #F2EC7A
+  { bg: "#F2EC7A", hover: "#C6C264", text: "#3D3B1F" },
+  // 5. Salmon    #E89B8A
+  { bg: "#E89B8A", hover: "#BE7F71", text: "#3A2723" },
+  // 6. Teal      #70C4B8
+  { bg: "#70C4B8", hover: "#5CA197", text: "#1C312E" },
 ];

@@ -22,7 +22,7 @@ export default function Home() {
           className="hidden md:flex flex-col justify-center overflow-hidden"
           style={{
             width: selectedProject ? "calc(100vw / 24)" : "50vw",
-            backgroundColor: "#0a0a0a",
+            backgroundColor: "#121212",
             height: "100dvh",
             flexShrink: 0,
             position: "sticky",
@@ -43,7 +43,7 @@ export default function Home() {
           {/* Mobile bio */}
           <div
             className="flex md:hidden flex-col"
-            style={{ backgroundColor: "#0a0a0a" }}
+            style={{ backgroundColor: "#121212" }}
           >
             {/* Padded content */}
             <div className="p-6">
