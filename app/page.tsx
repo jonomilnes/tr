@@ -29,7 +29,10 @@ export default function Home() {
             top: 0,
           }}
         >
-          <LeftBio collapsed={!!selectedProject} />
+          <LeftBio
+            collapsed={!!selectedProject}
+            onClose={selectedProject ? () => setSelectedProject(null) : undefined}
+          />
         </div>
 
         {/* Right column — gallery + mobile bio */}

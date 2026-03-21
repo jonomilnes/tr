@@ -56,6 +56,7 @@ export default function HoverExpandGallery({
           <div key={project.id} style={{ display: "contents" }}>
             <ProjectPanel
               project={project}
+              colorIndex={i}
               isExpanded={effectiveExpandedId === project.id}
               isLast={i === projects.length - 1}
               onHover={() => handleHover(project.id)}
@@ -64,8 +65,8 @@ export default function HoverExpandGallery({
             />
             <ProjectDetailPanel
               project={project}
+              colorIndex={i}
               isActive={selectedProject?.id === project.id}
-              onClose={onClose}
             />
           </div>
         ))}

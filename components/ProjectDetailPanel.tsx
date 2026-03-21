@@ -3,22 +3,23 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Project } from "@/types/project";
+import { PROJECT_COLORS } from "@/data/colors";
 
 interface ProjectDetailPanelProps {
   project: Project;
+  colorIndex: number;
   isActive: boolean;
-  onClose: () => void;
 }
 
-const BORDER = "1px solid rgba(255,255,255,0.50)";
 const INNER_PADDING = "calc(3 * 100vw / 24)";
 
 export default function ProjectDetailPanel({
   project,
+  colorIndex,
   isActive,
-  onClose,
 }: ProjectDetailPanelProps) {
   const [activeImage, setActiveImage] = useState(project.image);
+  const colors = PROJECT_COLORS[colorIndex] ?? PROJECT_COLORS[0];
 
   useEffect(() => {
     setActiveImage(project.image);
@@ -32,7 +33,7 @@ export default function ProjectDetailPanel({
         flexShrink: 0,
         height: "100%",
         overflow: "hidden",
-        borderLeft: isActive ? BORDER : "none",
+        backgroundColor: isActive ? colors.bg : "transparent",
         pointerEvents: isActive ? "auto" : "none",
       }}
     >
@@ -47,37 +48,11 @@ export default function ProjectDetailPanel({
           paddingRight: INNER_PADDING,
         }}
       >
-        {/* Close button */}
-        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "1.5rem" }}>
-          <button
-            onClick={onClose}
-            style={{
-              width: 36,
-              height: 36,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              color: "#666",
-              fontSize: "20px",
-              lineHeight: 1,
-              flexShrink: 0,
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#f0f0f0")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#666")}
-            aria-label="Close"
-          >
-            ×
-          </button>
-        </div>
-
         <h2
           style={{
             fontSize: "clamp(1.25rem, 2vw, 2rem)",
             fontWeight: 600,
-            color: "#f0f0f0",
+            color: colors.text,
             letterSpacing: "-0.02em",
             lineHeight: 1.1,
             marginBottom: "0.5rem",
@@ -88,7 +63,7 @@ export default function ProjectDetailPanel({
 
         <p
           className="font-mono"
-          style={{ fontSize: "0.75rem", color: "#666", marginBottom: "1.5rem" }}
+          style={{ fontSize: "0.75rem", color: colors.text, opacity: 0.6, marginBottom: "1.5rem" }}
         >
           {project.year}&nbsp;·&nbsp;{project.role}
         </p>
@@ -132,7 +107,7 @@ export default function ProjectDetailPanel({
                 padding: 0,
                 background: "none",
                 border: "none",
-                outline: activeImage === img ? "2px solid #c9a96e" : "2px solid transparent",
+                outline: activeImage === img ? `2px solid ${colors.text}` : "2px solid transparent",
               }}
             >
               <Image src={img} alt={`${project.title} ${i + 1}`} fill className="object-cover" sizes="80px" />
@@ -143,8 +118,9 @@ export default function ProjectDetailPanel({
         <h3
           style={{
             fontSize: "0.7rem",
-            fontWeight: 500,
-            color: "#666",
+            fontWeight: 600,
+            color: colors.text,
+            opacity: 0.6,
             textTransform: "uppercase",
             letterSpacing: "0.08em",
             marginBottom: "0.75rem",
@@ -152,7 +128,7 @@ export default function ProjectDetailPanel({
         >
           About the project
         </h3>
-        <p style={{ fontSize: "0.9rem", color: "#a0a0a0", lineHeight: 1.7, marginBottom: "2rem" }}>
+        <p style={{ fontSize: "0.9rem", color: colors.text, lineHeight: 1.7, marginBottom: "2rem" }}>
           {project.body}
         </p>
 
@@ -164,10 +140,20 @@ export default function ProjectDetailPanel({
             { label: "Deliverables", value: project.deliverables },
           ].map(({ label, value }) => (
             <div key={label} style={{ marginBottom: "1rem" }}>
-              <dt style={{ fontSize: "0.65rem", fontWeight: 500, color: "#666", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.2rem" }}>
+              <dt
+                style={{
+                  fontSize: "0.65rem",
+                  fontWeight: 600,
+                  color: colors.text,
+                  opacity: 0.6,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  marginBottom: "0.2rem",
+                }}
+              >
                 {label}
               </dt>
-              <dd style={{ fontSize: "0.9rem", color: "#f0f0f0" }}>{value}</dd>
+              <dd style={{ fontSize: "0.9rem", color: colors.text }}>{value}</dd>
             </div>
           ))}
         </dl>

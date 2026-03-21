@@ -1,11 +1,13 @@
 interface LeftBioProps {
   collapsed?: boolean;
+  onClose?: () => void;
 }
 
-export default function LeftBio({ collapsed = false }: LeftBioProps) {
+export default function LeftBio({ collapsed = false, onClose }: LeftBioProps) {
   if (collapsed) {
     return (
       <div
+        onClick={onClose}
         style={{
           width: "100%",
           height: "100%",
@@ -13,6 +15,7 @@ export default function LeftBio({ collapsed = false }: LeftBioProps) {
           flexDirection: "column",
           alignItems: "center",
           padding: "1.5rem 0",
+          cursor: onClose ? "pointer" : "default",
         }}
       >
         {/* LinkedIn — top, vertical (mirrors year position) */}

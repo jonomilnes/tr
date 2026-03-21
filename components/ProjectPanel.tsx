@@ -4,9 +4,11 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Project } from "@/types/project";
+import { PROJECT_COLORS } from "@/data/colors";
 
 interface ProjectPanelProps {
   project: Project;
+  colorIndex: number;
   isExpanded: boolean;
   isLast: boolean;
   onHover: () => void;
@@ -21,12 +23,12 @@ const springTransition = {
   damping: 35,
 };
 
-// One column = 100vw / 24 = 50vw / 12
+// One column = 100vw / 24
 const STRIP_W = "calc(50vw / 12)";
-const BORDER = "1px solid rgba(255,255,255,0.50)";
 
 export default function ProjectPanel({
   project,
+  colorIndex,
   isExpanded,
   onHover,
   onLeave,
@@ -35,10 +37,11 @@ export default function ProjectPanel({
 }: ProjectPanelProps) {
   const [hovered, setHovered] = useState(false);
 
+  const colors = PROJECT_COLORS[colorIndex] ?? PROJECT_COLORS[0];
+  const stripBg = hovered ? colors.hover : colors.bg;
+
   const handleMouseEnter = () => { setHovered(true); onHover(); };
   const handleMouseLeave = () => { setHovered(false); onLeave(); };
-
-  const titleColor = isExpanded ? "#f0f0f0" : hovered ? "#c9a96e" : "#888";
 
   if (isMobile) {
     return (
@@ -53,11 +56,11 @@ export default function ProjectPanel({
           height: "100svh",
           width: "80vw",
           flexShrink: 0,
+          flexBasis: 0,
           scrollSnapAlign: "start",
-          borderLeft: BORDER,
+          backgroundColor: colors.bg,
           overflow: "hidden",
           cursor: "pointer",
-          flexBasis: 0,
         }}
       >
         <motion.div
@@ -93,7 +96,7 @@ export default function ProjectPanel({
               transform: "rotate(180deg)",
               fontSize: "1rem",
               fontWeight: 400,
-              color: titleColor,
+              color: colors.text,
               transition: "color 0.2s ease",
             }}
           >
@@ -119,10 +122,9 @@ export default function ProjectPanel({
         minWidth: 0,
         cursor: "pointer",
         overflow: "hidden",
-        borderLeft: BORDER,
       }}
     >
-      {/* Text strip */}
+      {/* Coloured text strip */}
       <div
         style={{
           width: STRIP_W,
@@ -134,6 +136,8 @@ export default function ProjectPanel({
           padding: "1.5rem 0",
           position: "relative",
           zIndex: 2,
+          backgroundColor: stripBg,
+          transition: "background-color 0.15s ease",
         }}
       >
         {isExpanded && (
@@ -142,7 +146,7 @@ export default function ProjectPanel({
               writingMode: "vertical-rl",
               transform: "rotate(180deg)",
               fontSize: "1rem",
-              color: "#a0a0a0",
+              color: colors.text,
               letterSpacing: "0.06em",
               fontVariantNumeric: "tabular-nums",
               flexShrink: 0,
@@ -158,10 +162,9 @@ export default function ProjectPanel({
             transform: "rotate(180deg)",
             fontSize: "1rem",
             fontWeight: 400,
-            color: titleColor,
+            color: colors.text,
             letterSpacing: "0.01em",
             whiteSpace: "nowrap",
-            transition: "color 0.2s ease",
             flexShrink: 0,
           }}
         >
@@ -169,7 +172,7 @@ export default function ProjectPanel({
         </span>
       </div>
 
-      {/* Image — always in DOM, hidden when collapsed */}
+      {/* Image — fills panel width right of the strip */}
       <div
         style={{
           position: "absolute",
