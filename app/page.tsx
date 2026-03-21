@@ -37,34 +37,25 @@ export default function Home() {
         className="flex flex-col"
         style={{ width: "100%", flex: "1 1 auto" }}
       >
-        {/* ── Mobile bio ──────────────────────────────────────────────── */}
         <div className="flex md:hidden" style={{ backgroundColor: "#121212" }}>
           {selectedProject ? (
-            // Compact strip — tap to go back
+            // Compact strip — sticky so it stays visible while scrolling detail
             <div
               onClick={() => setSelectedProject(null)}
               style={{
+                position: "sticky",
+                top: 0,
+                zIndex: 10,
                 height: "60px",
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
                 padding: "0 1rem",
-                gap: "0.75rem",
                 cursor: "pointer",
+                backgroundColor: "#121212",
               }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/tr.png"
-                alt=""
-                style={{
-                  height: "36px",
-                  width: "36px",
-                  objectFit: "cover",
-                  flexShrink: 0,
-                }}
-              />
-              <div style={{ flex: 1 }} />
+              {/* Email — left */}
               <a
                 href="mailto:tamara_r@live.co.uk"
                 className="text-text-muted hover:text-text-primary"
@@ -73,7 +64,18 @@ export default function Home() {
               >
                 tamara_r@live.co.uk
               </a>
-              <span style={{ color: "#555" }}>·</span>
+
+              {/* Image — centre */}
+              <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/tr.png"
+                  alt=""
+                  style={{ height: "36px", width: "36px", objectFit: "cover" }}
+                />
+              </div>
+
+              {/* LinkedIn — right */}
               <a
                 href="https://www.linkedin.com/in/tamara-roper-4097abaa"
                 target="_blank"
@@ -85,9 +87,16 @@ export default function Home() {
               </a>
             </div>
           ) : (
-            // Full bio
+            // Full bio — image at top
             <div className="flex flex-col p-6 w-full">
               <h1 className="sr-only">Tamara Roper</h1>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/tr.png"
+                alt=""
+                width={64}
+                style={{ marginBottom: "1.5rem" }}
+              />
               <div
                 className="text-text-muted mb-6"
                 style={{ fontSize: "1rem", lineHeight: "1.7", fontWeight: 400 }}

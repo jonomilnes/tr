@@ -51,7 +51,7 @@ export default function MobileGallery({
               <span
                 style={{
                   fontSize: "1rem",
-                  fontWeight: 400,
+                  fontWeight: isSelected ? 500 : 400,
                   color: colors.text,
                 }}
               >
@@ -82,21 +82,7 @@ export default function MobileGallery({
                     backgroundColor: colors.bg,
                   }}
                 >
-                  <div style={{ padding: "1.5rem" }}>
-                    {/* Title */}
-                    <h2
-                      style={{
-                        fontSize: "clamp(1.5rem, 6vw, 2.5rem)",
-                        fontWeight: 600,
-                        color: colors.text,
-                        letterSpacing: "-0.02em",
-                        lineHeight: 1.1,
-                        marginBottom: "1.5rem",
-                      }}
-                    >
-                      {project.title}
-                    </h2>
-
+                  <div style={{ padding: "1rem" }}>
                     {/* Body */}
                     <p
                       style={{
