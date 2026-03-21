@@ -132,6 +132,7 @@ export default function ProjectPanel({
         height: "100%",
         backgroundColor: "#111",
         display: "flex",
+        flexBasis: 0,
         minWidth: 0,
         cursor: "pointer",
         overflow: "hidden",
