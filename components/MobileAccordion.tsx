@@ -18,16 +18,18 @@ const springTransition = {
 
 const ROW_BORDER = "1px solid rgba(255,255,255,0.50)";
 
+// Image is 1:1, inset 24px on left/right/bottom, flush to top.
+// Container height = image height + bottom inset
+//   = (100vw - 48px) + 24px = calc(100vw - 24px)
+const IMG_EXPANDED_H = "calc(100vw - 24px)";
+
 export default function MobileAccordion({
   projects,
   expandedId,
   onClick,
 }: MobileAccordionProps) {
   return (
-    <div
-      className="flex flex-col w-full"
-      style={{ borderTop: ROW_BORDER }}
-    >
+    <div className="flex flex-col w-full" style={{ borderTop: ROW_BORDER }}>
       {projects.map((project) => {
         const isExpanded = expandedId === project.id;
 
@@ -67,35 +69,37 @@ export default function MobileAccordion({
               </span>
             </div>
 
-            {/* Image — 2:3 aspect ratio, animates open/closed */}
+            {/* Image — 1:1, inset 24px on bottom/left/right */}
             <motion.div
               initial={false}
-              animate={{ height: isExpanded ? "150vw" : "0vw" }}
+              animate={{ height: isExpanded ? IMG_EXPANDED_H : "0px" }}
               transition={springTransition}
-              style={{
-                overflow: "hidden",
-                position: "relative",
-                width: "100%",
-              }}
+              style={{ overflow: "hidden", width: "100%" }}
             >
-              {/* Separate motion.div for layoutId so it doesn't conflict
-                  with the desktop panels (which use project.id).
-                  On mobile the overlay will fade in without a morph. */}
-              <motion.div
-                layoutId={`${project.id}-mob`}
-                animate={{ opacity: isExpanded ? 1 : 0 }}
-                transition={{ duration: 0.2 }}
-                style={{ position: "absolute", inset: 0 }}
+              {/* Inset wrapper: no top, 24px on left/right/bottom */}
+              <div
+                style={{
+                  margin: "0 24px 24px 24px",
+                  position: "relative",
+                  aspectRatio: "1 / 1",
+                }}
               >
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover"
-                  sizes="100vw"
-                  priority={isExpanded}
-                />
-              </motion.div>
+                <motion.div
+                  layoutId={`${project.id}-mob`}
+                  animate={{ opacity: isExpanded ? 1 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  style={{ position: "absolute", inset: 0, overflow: "hidden" }}
+                >
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover"
+                    sizes="calc(100vw - 48px)"
+                    priority={isExpanded}
+                  />
+                </motion.div>
+              </div>
             </motion.div>
           </div>
         );

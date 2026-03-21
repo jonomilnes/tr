@@ -16,6 +16,12 @@ export default function ProjectOverlay({
 }: ProjectOverlayProps) {
   const [activeImage, setActiveImage] = useState<string>(project.image);
 
+  // Detect mobile on mount (component only renders after a user interaction
+  // so there is no SSR/hydration concern here)
+  const [isMobile] = useState(
+    () => typeof window !== "undefined" && window.innerWidth < 768
+  );
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -28,12 +34,24 @@ export default function ProjectOverlay({
     setActiveImage(project.image);
   }, [project]);
 
+  // Mobile: slide up from bottom. Desktop: appear instantly, fade out on close.
+  const motionProps = isMobile
+    ? {
+        initial: { y: "100%" },
+        animate: { y: 0 },
+        exit: { y: "100%" },
+        transition: { type: "spring" as const, stiffness: 300, damping: 32 },
+      }
+    : {
+        initial: { opacity: 1 },
+        animate: { opacity: 1 },
+        exit: { opacity: 0 },
+        transition: { duration: 0.15 },
+      };
+
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
+      {...motionProps}
       className="fixed inset-0 z-50 overflow-y-auto scrollbar-hide"
       style={{ backgroundColor: "#0a0a0a" }}
     >
