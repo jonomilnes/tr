@@ -24,9 +24,9 @@ const springTransition = {
 // Gap between image and panel edges on expanded panels
 const IMG_INSET = 10;
 
-// The text strip width equals one collapsed panel's width.
-// Right column = 50vw. Total flex units = 4 + 5×1 = 9. Collapsed unit = 50vw/9.
-const STRIP_W = "calc(50vw / 9)";
+// 12-column grid: expanded = 7 cols (1 strip + 6 image), collapsed = 1 col each.
+// Right column = 50vw. One column = 50vw / 12.
+const STRIP_W = "calc(50vw / 12)";
 
 export default function ProjectPanel({
   project,
@@ -55,7 +55,7 @@ export default function ProjectPanel({
     return (
       <motion.div
         layout
-        animate={{ flexGrow: isExpanded ? 4 : 1 }}
+        animate={{ flexGrow: isExpanded ? 7 : 1 }}
         transition={springTransition}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -122,7 +122,7 @@ export default function ProjectPanel({
   return (
     <motion.div
       layout
-      animate={{ flexGrow: isExpanded ? 4 : 1 }}
+      animate={{ flexGrow: isExpanded ? 7 : 1 }}
       transition={springTransition}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
