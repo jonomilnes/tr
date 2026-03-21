@@ -12,12 +12,7 @@ interface ProjectDetailPanelProps {
 
 const INNER_PADDING = "calc(3 * 100vw / 24)";
 
-// Extract pixel dimensions from picsum URLs like .../800/1200
-function getImageDimensions(url: string): { width: number; height: number } {
-  const match = url.match(/\/(\d+)\/(\d+)(?:[?#].*)?$/);
-  if (match) return { width: Number(match[1]), height: Number(match[2]) };
-  return { width: 1200, height: 800 };
-}
+import { getImageDimensions } from "@/utils/imageHelper";
 
 export default function ProjectDetailPanel({
   project,

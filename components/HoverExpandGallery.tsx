@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Project } from "@/types/project";
 import ProjectPanel from "./ProjectPanel";
 import ProjectDetailPanel from "./ProjectDetailPanel";
-import MobileAccordion from "./MobileAccordion";
+import MobileGallery from "./MobileGallery";
 
 interface HoverExpandGalleryProps {
   projects: Project[];
@@ -21,7 +21,7 @@ export default function HoverExpandGallery({
 }: HoverExpandGalleryProps) {
   const [expandedId, setExpandedId] = useState<string>(projects[0].id);
 
-  // When a project is selected all panels collapse to strips — no image shown.
+  // When a project is selected all panels collapse to strips.
   const effectiveExpandedId = selectedProject ? null : expandedId;
 
   const handleHover = (id: string) => {
@@ -37,17 +37,9 @@ export default function HoverExpandGallery({
     }
   };
 
-  const handleMobileClick = (project: Project) => {
-    if (expandedId === project.id) {
-      onOpen(project);
-    } else {
-      setExpandedId(project.id);
-    }
-  };
-
   return (
     <>
-      {/* ── Desktop ──────────────────────────────────────────────────────── */}
+      {/* ── Desktop ──────────────────────────────────────────────────── */}
       <div
         className="hidden md:flex w-full overflow-hidden"
         style={{ height: "100dvh" }}
@@ -72,12 +64,13 @@ export default function HoverExpandGallery({
         ))}
       </div>
 
-      {/* ── Mobile ───────────────────────────────────────────────────────── */}
+      {/* ── Mobile ───────────────────────────────────────────────────── */}
       <div className="flex md:hidden w-full flex-col">
-        <MobileAccordion
+        <MobileGallery
           projects={projects}
-          expandedId={expandedId}
-          onClick={handleMobileClick}
+          selectedProject={selectedProject}
+          onOpen={onOpen}
+          onClose={onClose}
         />
       </div>
     </>

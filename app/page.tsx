@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import LeftBio from "@/components/LeftBio";
 import HoverExpandGallery from "@/components/HoverExpandGallery";
-import ProjectOverlay from "@/components/ProjectOverlay";
 import { projects } from "@/data/projects";
 import { Project } from "@/types/project";
 
@@ -12,47 +10,84 @@ export default function Home() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
-    <>
-      <main
-        className="flex flex-col md:flex-row w-full bg-background"
-        style={{ minHeight: "100dvh" }}
+    <main
+      className="flex flex-col md:flex-row w-full bg-background"
+      style={{ minHeight: "100dvh" }}
+    >
+      {/* Left bio — desktop only, collapses to 1 strip column when a project is selected */}
+      <div
+        className="hidden md:flex flex-col justify-center overflow-hidden"
+        style={{
+          width: selectedProject ? "calc(100vw / 24)" : "50vw",
+          backgroundColor: "#121212",
+          height: "100dvh",
+          flexShrink: 0,
+          position: "sticky",
+          top: 0,
+        }}
       >
-        {/* Left bio — collapses instantly to 1 strip column when a project is selected */}
-        <div
-          className="hidden md:flex flex-col justify-center overflow-hidden"
-          style={{
-            width: selectedProject ? "calc(100vw / 24)" : "50vw",
-            backgroundColor: "#121212",
-            height: "100dvh",
-            flexShrink: 0,
-            position: "sticky",
-            top: 0,
-          }}
-        >
-          <LeftBio
-            collapsed={!!selectedProject}
-            onClose={selectedProject ? () => setSelectedProject(null) : undefined}
-          />
-        </div>
+        <LeftBio
+          collapsed={!!selectedProject}
+          onClose={selectedProject ? () => setSelectedProject(null) : undefined}
+        />
+      </div>
 
-        {/* Right column — gallery + mobile bio */}
-        <div
-          className="flex flex-col"
-          style={{ width: "100%", flex: "1 1 auto" }}
-        >
-          {/* Mobile bio */}
-          <div
-            className="flex md:hidden flex-col"
-            style={{ backgroundColor: "#121212" }}
-          >
-            {/* Padded content */}
-            <div className="p-6">
-              <h1
-                className="text-text-primary leading-none font-semibold mb-6"
-                style={{ fontSize: "1rem", letterSpacing: "-0.03em" }}
+      {/* Right column — gallery + mobile bio */}
+      <div
+        className="flex flex-col"
+        style={{ width: "100%", flex: "1 1 auto" }}
+      >
+        {/* ── Mobile bio ──────────────────────────────────────────────── */}
+        <div className="flex md:hidden" style={{ backgroundColor: "#121212" }}>
+          {selectedProject ? (
+            // Compact strip — tap to go back
+            <div
+              onClick={() => setSelectedProject(null)}
+              style={{
+                height: "60px",
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                padding: "0 1rem",
+                gap: "0.75rem",
+                cursor: "pointer",
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/tr.png"
+                alt=""
+                style={{
+                  height: "36px",
+                  width: "36px",
+                  objectFit: "cover",
+                  flexShrink: 0,
+                }}
+              />
+              <div style={{ flex: 1 }} />
+              <a
+                href="mailto:tamara_r@live.co.uk"
+                className="text-text-muted hover:text-text-primary"
+                style={{ fontSize: "0.85rem" }}
+                onClick={(e) => e.stopPropagation()}
               >
-                Tamara Roper
-              </h1>
+                tamara_r@live.co.uk
+              </a>
+              <span style={{ color: "#555" }}>·</span>
+              <a
+                href="https://www.linkedin.com/in/tamara-roper-4097abaa"
+                target="_blank"
+                className="text-text-muted hover:text-text-primary"
+                style={{ fontSize: "0.85rem" }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                LinkedIn
+              </a>
+            </div>
+          ) : (
+            // Full bio
+            <div className="flex flex-col p-6 w-full">
+              <h1 className="sr-only">Tamara Roper</h1>
               <div
                 className="text-text-muted mb-6"
                 style={{ fontSize: "1rem", lineHeight: "1.7", fontWeight: 400 }}
@@ -77,10 +112,9 @@ export default function Home() {
                   some of the world&apos;s biggest companies.
                 </p>
               </div>
-              {/* Links below bio text */}
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-1">
                 <a
-                  className="text-text-muted hover:text-text-primary mb-1"
+                  className="text-text-muted hover:text-text-primary"
                   href="mailto:tamara_r@live.co.uk"
                   style={{ fontSize: "1rem" }}
                 >
@@ -96,28 +130,17 @@ export default function Home() {
                 </a>
               </div>
             </div>
-          </div>
-
-          {/* Gallery */}
-          <HoverExpandGallery
-            projects={projects}
-            onOpen={(project) => setSelectedProject(project)}
-            selectedProject={selectedProject}
-            onClose={() => setSelectedProject(null)}
-          />
+          )}
         </div>
-      </main>
 
-      {/* Overlay — mobile only */}
-      <AnimatePresence>
-        {selectedProject && (
-          <ProjectOverlay
-            key={selectedProject.id}
-            project={selectedProject}
-            onClose={() => setSelectedProject(null)}
-          />
-        )}
-      </AnimatePresence>
-    </>
+        {/* Gallery */}
+        <HoverExpandGallery
+          projects={projects}
+          onOpen={(project) => setSelectedProject(project)}
+          selectedProject={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      </div>
+    </main>
   );
 }
