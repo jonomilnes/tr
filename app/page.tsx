@@ -1,12 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import LeftBio from "@/components/LeftBio";
 import HoverExpandGallery from "@/components/HoverExpandGallery";
 import ProjectOverlay from "@/components/ProjectOverlay";
 import { projects } from "@/data/projects";
 import { Project } from "@/types/project";
+
+const springTransition = {
+  type: "spring" as const,
+  stiffness: 280,
+  damping: 26,
+};
 
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -17,11 +23,12 @@ export default function Home() {
         className="flex flex-col md:flex-row w-full bg-background"
         style={{ minHeight: "100dvh" }}
       >
-        {/* Left bio column — desktop only */}
-        <div
-          className="hidden md:flex flex-col justify-center"
+        {/* Left bio — desktop only, slides out when a project is selected */}
+        <motion.div
+          className="hidden md:flex flex-col justify-center overflow-hidden"
+          animate={{ width: selectedProject ? "0vw" : "50vw" }}
+          transition={springTransition}
           style={{
-            width: "50%",
             backgroundColor: "#0a0a0a",
             height: "100dvh",
             flexShrink: 0,
@@ -30,15 +37,12 @@ export default function Home() {
           }}
         >
           <LeftBio />
-        </div>
+        </motion.div>
 
         {/* Right column — gallery + mobile bio */}
         <div
           className="flex flex-col"
-          style={{
-            width: "100%",
-            flex: "1 1 auto",
-          }}
+          style={{ width: "100%", flex: "1 1 auto" }}
         >
           {/* Mobile bio — shown only on mobile */}
           <div
@@ -96,10 +100,13 @@ export default function Home() {
           <HoverExpandGallery
             projects={projects}
             onOpen={(project) => setSelectedProject(project)}
+            selectedProject={selectedProject}
+            onClose={() => setSelectedProject(null)}
           />
         </div>
       </main>
 
+      {/* Overlay — mobile only (md:hidden applied inside ProjectOverlay) */}
       <AnimatePresence>
         {selectedProject && (
           <ProjectOverlay

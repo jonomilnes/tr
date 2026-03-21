@@ -52,7 +52,7 @@ export default function ProjectOverlay({
   return (
     <motion.div
       {...motionProps}
-      className="fixed inset-0 z-50 overflow-y-auto scrollbar-hide"
+      className="fixed inset-0 z-50 overflow-y-auto scrollbar-hide md:hidden"
       style={{ backgroundColor: "#0a0a0a" }}
     >
       {/* Close button */}

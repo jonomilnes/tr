@@ -1,26 +1,48 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import { Project } from "@/types/project";
 import ProjectPanel from "./ProjectPanel";
+import ProjectDetailPanel from "./ProjectDetailPanel";
 import MobileAccordion from "./MobileAccordion";
 
 interface HoverExpandGalleryProps {
   projects: Project[];
   onOpen: (project: Project) => void;
+  selectedProject: Project | null;
+  onClose: () => void;
 }
 
 export default function HoverExpandGallery({
   projects,
   onOpen,
+  selectedProject,
+  onClose,
 }: HoverExpandGalleryProps) {
   const [expandedId, setExpandedId] = useState<string>(projects[0].id);
 
+  // When a project is selected, lock the expanded panel to it.
+  // Hovering other panels does not change the expanded state.
+  const effectiveExpandedId = selectedProject?.id ?? expandedId;
+
   const handleHover = (id: string) => {
-    setExpandedId(id);
+    if (!selectedProject) setExpandedId(id);
   };
 
-  const handleClick = (project: Project) => {
+  // Desktop: one click opens the detail (or closes if already selected).
+  // Clicking a different collapsed panel while detail is open switches directly.
+  const handleDesktopClick = (project: Project) => {
+    if (selectedProject?.id === project.id) {
+      onClose();
+    } else {
+      setExpandedId(project.id);
+      onOpen(project);
+    }
+  };
+
+  // Mobile: tap to expand, tap again (expanded) to open overlay.
+  const handleMobileClick = (project: Project) => {
     if (expandedId === project.id) {
       onOpen(project);
     } else {
@@ -30,30 +52,42 @@ export default function HoverExpandGallery({
 
   return (
     <>
-      {/* Desktop: horizontal flex row of panels filling 100dvh */}
+      {/* ── Desktop ──────────────────────────────────────────────────────── */}
       <div
         className="hidden md:flex w-full overflow-hidden"
         style={{ height: "100dvh" }}
       >
         {projects.map((project, i) => (
-          <ProjectPanel
-            key={project.id}
-            project={project}
-            isExpanded={expandedId === project.id}
-            isLast={i === projects.length - 1}
-            onHover={() => handleHover(project.id)}
-            onLeave={() => {}}
-            onClick={() => handleClick(project)}
-          />
+          <AnimatePresence key={project.id} mode="sync">
+            <>
+              <ProjectPanel
+                project={project}
+                isExpanded={effectiveExpandedId === project.id}
+                isLast={i === projects.length - 1 && !selectedProject}
+                onHover={() => handleHover(project.id)}
+                onLeave={() => {}}
+                onClick={() => handleDesktopClick(project)}
+              />
+
+              {/* Detail panel — inserted immediately after the selected panel */}
+              {selectedProject?.id === project.id && (
+                <ProjectDetailPanel
+                  key={`detail-${project.id}`}
+                  project={selectedProject}
+                  onClose={onClose}
+                />
+              )}
+            </>
+          </AnimatePresence>
         ))}
       </div>
 
-      {/* Mobile: vertical accordion */}
+      {/* ── Mobile ───────────────────────────────────────────────────────── */}
       <div className="flex md:hidden w-full flex-col">
         <MobileAccordion
           projects={projects}
           expandedId={expandedId}
-          onClick={handleClick}
+          onClick={handleMobileClick}
         />
       </div>
     </>
