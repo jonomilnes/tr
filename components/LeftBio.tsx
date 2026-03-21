@@ -84,30 +84,13 @@ export default function LeftBio({ collapsed = false, onClose }: LeftBioProps) {
       <h1 className="sr-only">Tamara Roper</h1>
 
       <div className="flex flex-col justify-between flex-1 p-6 min-h-0">
-        {/* Top row: image + links top-right */}
-        <div className="flex justify-between items-start">
+        {/* Top: image only */}
+        <div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/tr.png" width="64" alt="" />
-          <div className="flex flex-col items-end gap-1">
-            <a
-              className="text-text-muted hover:text-text-primary"
-              href="mailto:tamara_r@live.co.uk"
-              style={{ fontSize: "1rem" }}
-            >
-              tamara_r@live.co.uk
-            </a>
-            <a
-              className="text-text-muted hover:text-text-primary"
-              href="https://www.linkedin.com/in/tamara-roper-4097abaa"
-              target="_blank"
-              style={{ fontSize: "1rem" }}
-            >
-              LinkedIn
-            </a>
-          </div>
         </div>
 
-        {/* Bio text — pushed to bottom */}
+        {/* Bio text */}
         <div
           className="text-text-muted"
           style={{
@@ -136,6 +119,25 @@ export default function LeftBio({ collapsed = false, onClose }: LeftBioProps) {
             creative, or present brand narratives to some of the world&apos;s
             biggest companies.
           </p>
+        </div>
+
+        {/* Links — below bio text, above marquee */}
+        <div className="flex flex-col gap-1">
+          <a
+            className="text-text-muted hover:text-text-primary"
+            href="mailto:tamara_r@live.co.uk"
+            style={{ fontSize: "1rem" }}
+          >
+            tamara_r@live.co.uk
+          </a>
+          <a
+            className="text-text-muted hover:text-text-primary"
+            href="https://www.linkedin.com/in/tamara-roper-4097abaa"
+            target="_blank"
+            style={{ fontSize: "1rem" }}
+          >
+            LinkedIn
+          </a>
         </div>
       </div>
 
