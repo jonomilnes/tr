@@ -13,6 +13,7 @@ interface ProjectPanelProps {
   onLeave: () => void;
   onClick: () => void;
   isMobile?: boolean;
+  contentVisible?: boolean;
 }
 
 const springTransition = {
@@ -32,6 +33,7 @@ export default function ProjectPanel({
   onLeave,
   onClick,
   isMobile = false,
+  contentVisible = true,
 }: ProjectPanelProps) {
   const [hovered, setHovered] = useState(false);
 
@@ -122,7 +124,7 @@ export default function ProjectPanel({
         borderLeft: BORDER,
       }}
     >
-      {/* Text strip */}
+      {/* Text strip — border/bg always visible, text fades with contentVisible */}
       <div
         style={{
           width: STRIP_W,
@@ -146,6 +148,8 @@ export default function ProjectPanel({
               letterSpacing: "0.06em",
               fontVariantNumeric: "tabular-nums",
               flexShrink: 0,
+              opacity: contentVisible ? 1 : 0,
+              transition: "opacity 0.12s ease",
             }}
           >
             {project.year}
@@ -161,8 +165,9 @@ export default function ProjectPanel({
             color: titleColor,
             letterSpacing: "0.01em",
             whiteSpace: "nowrap",
-            transition: "color 0.2s ease",
+            transition: "color 0.2s ease, opacity 0.12s ease",
             flexShrink: 0,
+            opacity: contentVisible ? 1 : 0,
           }}
         >
           {project.title}

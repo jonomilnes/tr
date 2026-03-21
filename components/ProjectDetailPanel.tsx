@@ -9,6 +9,7 @@ interface ProjectDetailPanelProps {
   project: Project;
   isActive: boolean;
   onClose: () => void;
+  contentVisible?: boolean;
 }
 
 const springTransition = {
@@ -26,6 +27,7 @@ export default function ProjectDetailPanel({
   project,
   isActive,
   onClose,
+  contentVisible = true,
 }: ProjectDetailPanelProps) {
   const [activeImage, setActiveImage] = useState(project.image);
 
@@ -47,7 +49,7 @@ export default function ProjectDetailPanel({
         pointerEvents: isActive ? "auto" : "none",
       }}
     >
-      {/* Scrollable inner with centred content */}
+      {/* Scrollable inner with centred content — fades with contentVisible */}
       <div
         className="scrollbar-hide"
         style={{
@@ -57,6 +59,8 @@ export default function ProjectDetailPanel({
           paddingBottom: "1.5rem",
           paddingLeft: INNER_PADDING,
           paddingRight: INNER_PADDING,
+          opacity: contentVisible ? 1 : 0,
+          transition: "opacity 0.12s ease",
         }}
       >
         {/* Close button */}

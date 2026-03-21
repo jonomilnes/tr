@@ -11,6 +11,8 @@ interface HoverExpandGalleryProps {
   onOpen: (project: Project) => void;
   selectedProject: Project | null;
   onClose: () => void;
+  onTransition: (action: () => void) => void;
+  contentVisible: boolean;
 }
 
 export default function HoverExpandGallery({
@@ -18,27 +20,32 @@ export default function HoverExpandGallery({
   onOpen,
   selectedProject,
   onClose,
+  onTransition,
+  contentVisible,
 }: HoverExpandGalleryProps) {
   const [expandedId, setExpandedId] = useState<string>(projects[0].id);
 
-  // When a project is selected all panels collapse to strips — no image shown.
+  // When a project is selected all panels collapse to strips.
   const effectiveExpandedId = selectedProject ? null : expandedId;
 
   const handleHover = (id: string) => {
     if (!selectedProject) setExpandedId(id);
   };
 
-  // One click: expand + open detail. Click selected again: close.
+  // Desktop: route every state-changing click through onTransition so
+  // content fades out before the layout shifts.
   const handleDesktopClick = (project: Project) => {
     if (selectedProject?.id === project.id) {
-      onClose();
+      onClose(); // onClose is already transition-wrapped in page.tsx
     } else {
-      setExpandedId(project.id);
-      onOpen(project);
+      onTransition(() => {
+        setExpandedId(project.id);
+        onOpen(project);
+      });
     }
   };
 
-  // Mobile: tap to expand, tap expanded to open overlay.
+  // Mobile: tap to expand, tap again to open overlay (no transition needed).
   const handleMobileClick = (project: Project) => {
     if (expandedId === project.id) {
       onOpen(project);
@@ -55,9 +62,6 @@ export default function HoverExpandGallery({
         style={{ height: "100dvh" }}
       >
         {projects.map((project, i) => (
-          // Each panel is immediately followed by its detail panel.
-          // Detail panels always exist in the DOM; flexGrow drives visibility.
-          // This avoids mount/unmount conflicts with AnimatePresence.
           <div key={project.id} style={{ display: "contents" }}>
             <ProjectPanel
               project={project}
@@ -66,11 +70,13 @@ export default function HoverExpandGallery({
               onHover={() => handleHover(project.id)}
               onLeave={() => {}}
               onClick={() => handleDesktopClick(project)}
+              contentVisible={contentVisible}
             />
             <ProjectDetailPanel
               project={project}
               isActive={selectedProject?.id === project.id}
               onClose={onClose}
+              contentVisible={contentVisible}
             />
           </div>
         ))}

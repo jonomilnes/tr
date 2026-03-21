@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import LeftBio from "@/components/LeftBio";
 import HoverExpandGallery from "@/components/HoverExpandGallery";
@@ -14,8 +14,37 @@ const springTransition = {
   damping: 35,
 };
 
+// How long content takes to fade out before the layout animation starts (ms)
+const FADE_OUT_MS = 120;
+// How long after the layout action fires before content fades back in (ms)
+const FADE_IN_DELAY_MS = 450;
+
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [contentVisible, setContentVisible] = useState(true);
+
+  /**
+   * Sequences: fade content out → run action (layout shifts) → fade content in.
+   * All layout-changing interactions on desktop go through this.
+   */
+  const handleTransition = useCallback((action: () => void) => {
+    setContentVisible(false);
+    setTimeout(() => {
+      action();
+      setTimeout(() => setContentVisible(true), FADE_IN_DELAY_MS);
+    }, FADE_OUT_MS);
+  }, []);
+
+  const handleOpen = useCallback(
+    (project: Project) =>
+      handleTransition(() => setSelectedProject(project)),
+    [handleTransition]
+  );
+
+  const handleClose = useCallback(
+    () => handleTransition(() => setSelectedProject(null)),
+    [handleTransition]
+  );
 
   return (
     <>
@@ -36,7 +65,7 @@ export default function Home() {
             top: 0,
           }}
         >
-          <LeftBio collapsed={!!selectedProject} />
+          <LeftBio collapsed={!!selectedProject} contentVisible={contentVisible} />
         </motion.div>
 
         {/* Right column — gallery + mobile bio */}
@@ -44,7 +73,7 @@ export default function Home() {
           className="flex flex-col"
           style={{ width: "100%", flex: "1 1 auto" }}
         >
-          {/* Mobile bio — shown only on mobile */}
+          {/* Mobile bio */}
           <div
             className="flex md:hidden flex-col justify-center p-6"
             style={{ backgroundColor: "#0a0a0a" }}
@@ -99,14 +128,16 @@ export default function Home() {
           {/* Gallery */}
           <HoverExpandGallery
             projects={projects}
-            onOpen={(project) => setSelectedProject(project)}
+            onOpen={handleOpen}
             selectedProject={selectedProject}
-            onClose={() => setSelectedProject(null)}
+            onClose={handleClose}
+            onTransition={handleTransition}
+            contentVisible={contentVisible}
           />
         </div>
       </main>
 
-      {/* Overlay — mobile only (md:hidden applied inside ProjectOverlay) */}
+      {/* Overlay — mobile only */}
       <AnimatePresence>
         {selectedProject && (
           <ProjectOverlay
