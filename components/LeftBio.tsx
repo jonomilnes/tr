@@ -39,16 +39,18 @@ export default function LeftBio({ collapsed = false, onClose }: LeftBioProps) {
 
         <div style={{ flex: 1 }} />
 
-        {/* Profile photo — centre */}
+        {/* Profile photo — rotated, bleeds to the right */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/tr.png"
           alt=""
           style={{
-            width: "80%",
-            aspectRatio: "1 / 1",
-            objectFit: "cover",
+            width: "100%",
+            height: "auto",
+            display: "block",
             flexShrink: 0,
+            transform: "rotate(-90deg)",
+            transformOrigin: "left center",
           }}
         />
 

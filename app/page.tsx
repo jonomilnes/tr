@@ -14,9 +14,9 @@ export default function Home() {
       className="flex flex-col md:flex-row w-full bg-background"
       style={{ minHeight: "100dvh" }}
     >
-      {/* Left bio — desktop only, collapses to 1 strip column when a project is selected */}
+      {/* Left bio — desktop only */}
       <div
-        className="hidden md:flex flex-col justify-center overflow-hidden"
+        className="hidden md:flex flex-col justify-center"
         style={{
           width: selectedProject ? "calc(100vw / 24)" : "50vw",
           backgroundColor: "#121212",
@@ -24,6 +24,8 @@ export default function Home() {
           flexShrink: 0,
           position: "sticky",
           top: 0,
+          overflow: selectedProject ? "visible" : "hidden",
+          zIndex: selectedProject ? 1 : 0,
         }}
       >
         <LeftBio
@@ -71,12 +73,16 @@ export default function Home() {
                 tamara_r@live.co.uk
               </a>
 
-              {/* Image — centre (auto column) */}
+              {/* Image — centre (auto column, bleeds down over rows) */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/tr.png"
                 alt=""
-                style={{ height: "36px", width: "36px", objectFit: "cover", display: "block" }}
+                style={{
+                  width: "48px",
+                  height: "auto",
+                  display: "block",
+                }}
               />
 
               {/* LinkedIn — right */}
