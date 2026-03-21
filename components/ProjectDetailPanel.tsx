@@ -42,8 +42,8 @@ export default function ProjectDetailPanel({
         style={{
           height: "100%",
           overflowY: "auto",
-          paddingTop: "1.5rem",
-          paddingBottom: "1.5rem",
+          paddingTop: "6rem",
+          paddingBottom: "6rem",
           paddingLeft: INNER_PADDING,
           paddingRight: INNER_PADDING,
         }}

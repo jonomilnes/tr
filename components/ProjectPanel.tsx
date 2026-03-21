@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Project } from "@/types/project";
@@ -34,10 +35,11 @@ export default function ProjectPanel({
   onClick,
   isMobile = false,
 }: ProjectPanelProps) {
+  const [hovered, setHovered] = useState(false);
   const colors = PROJECT_COLORS[colorIndex] ?? PROJECT_COLORS[0];
 
-  const handleMouseEnter = () => onHover();
-  const handleMouseLeave = () => onLeave();
+  const handleMouseEnter = () => { setHovered(true); onHover(); };
+  const handleMouseLeave = () => { setHovered(false); onLeave(); };
 
   if (isMobile) {
     return (
@@ -132,7 +134,8 @@ export default function ProjectPanel({
           padding: "1.5rem 0",
           position: "relative",
           zIndex: 2,
-          backgroundColor: colors.bg,
+          backgroundColor: hovered ? colors.hover : colors.bg,
+          transition: "background-color 0.15s ease",
         }}
       >
         {isExpanded && (
