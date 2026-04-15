@@ -19,7 +19,7 @@ export default function Home() {
         className="hidden md:flex flex-col justify-center"
         style={{
           width: selectedProject ? "calc(100vw / 24)" : "50vw",
-          backgroundColor: "#121212",
+          backgroundColor: "#ffffff",
           height: "100dvh",
           flexShrink: 0,
           position: "sticky",
@@ -43,14 +43,14 @@ export default function Home() {
         <div
           className="flex md:hidden"
           style={{
-            backgroundColor: "#121212",
+            backgroundColor: "#ffffff",
             position: selectedProject ? "sticky" : "relative",
             top: 0,
             zIndex: 10,
           }}
         >
           {selectedProject ? (
-            // Compact strip — 3-col grid keeps image truly centred
+            // Compact strip — email left · name centre · LinkedIn right
             <div
               onClick={() => setSelectedProject(null)}
               style={{
@@ -63,62 +63,45 @@ export default function Home() {
                 cursor: "pointer",
               }}
             >
-              {/* Email — left */}
               <a
                 href="mailto:tamara_r@live.co.uk"
-                className="text-text-muted hover:text-text-primary"
-                style={{ fontSize: "0.85rem" }}
+                style={{ fontSize: "0.85rem", color: "#202124", opacity: 0.5, textDecoration: "none" }}
                 onClick={(e) => e.stopPropagation()}
               >
                 tamara_r@live.co.uk
               </a>
-
-              {/* Image — centre (auto column, bleeds down over rows) */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/tr.png"
-                alt=""
-                style={{
-                  width: "48px",
-                  height: "auto",
-                  display: "block",
-                }}
-              />
-
-              {/* LinkedIn — right */}
+              <span style={{ fontSize: "0.95rem", fontWeight: 500, color: "#202124" }}>
+                Tamara Roper
+              </span>
               <a
                 href="https://www.linkedin.com/in/tamara-roper-4097abaa"
                 target="_blank"
-                className="text-text-muted hover:text-text-primary"
-                style={{ fontSize: "0.85rem", textAlign: "right", justifySelf: "end" }}
+                style={{ fontSize: "0.85rem", color: "#202124", opacity: 0.5, textDecoration: "none", textAlign: "right", justifySelf: "end" }}
                 onClick={(e) => e.stopPropagation()}
               >
                 LinkedIn
               </a>
             </div>
           ) : (
-            // Full bio — image at top
-            <div className="flex flex-col p-6 w-full">
+            // Full mobile bio
+            <div className="flex flex-col p-6 w-full" style={{ color: "#202124" }}>
               <h1 className="sr-only">Tamara Roper</h1>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/tr.png"
-                alt=""
-                width={64}
-                style={{ marginBottom: "1.5rem" }}
-              />
-              <div
-                className="text-text-muted mb-6"
-                style={{ fontSize: "1rem", lineHeight: "1.7", fontWeight: 400 }}
-              >
-                <p className="mb-2">Hello.</p>
-                <p className="mb-2">
+              <p style={{ fontSize: "1rem", fontWeight: 500, marginBottom: "0.5rem" }}>
+                Tamara Roper
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.15rem", marginBottom: "1.5rem" }}>
+                <a href="mailto:tamara_r@live.co.uk" style={{ fontSize: "1rem", color: "#202124", opacity: 0.5, textDecoration: "none" }}>
+                  tamara_r@live.co.uk
+                </a>
+                <a href="https://www.linkedin.com/in/tamara-roper-4097abaa" target="_blank" style={{ fontSize: "1rem", color: "#202124", opacity: 0.5, textDecoration: "none" }}>
+                  LinkedIn
+                </a>
+              </div>
+              <div style={{ fontSize: "1rem", lineHeight: "1.7", fontWeight: 400, opacity: 0.7 }}>
+                <p style={{ marginBottom: "0.5rem" }}>Hello.</p>
+                <p style={{ marginBottom: "0.5rem" }}>
                   I&apos;m Tamara, currently Associate Copy Director at{" "}
-                  <a
-                    href="https://saffron-consultants.com/"
-                    target="_blank"
-                    className="hover:text-text-primary"
-                  >
+                  <a href="https://saffron-consultants.com/" target="_blank" style={{ color: "#202124" }}>
                     Saffron
                   </a>
                   , Madrid.
@@ -130,23 +113,6 @@ export default function Home() {
                   develop full-bodied creative, or present brand narratives to
                   some of the world&apos;s biggest companies.
                 </p>
-              </div>
-              <div className="flex flex-col gap-1">
-                <a
-                  className="text-text-muted hover:text-text-primary"
-                  href="mailto:tamara_r@live.co.uk"
-                  style={{ fontSize: "1rem" }}
-                >
-                  tamara_r@live.co.uk
-                </a>
-                <a
-                  className="text-text-muted hover:text-text-primary"
-                  href="https://www.linkedin.com/in/tamara-roper-4097abaa"
-                  target="_blank"
-                  style={{ fontSize: "1rem" }}
-                >
-                  LinkedIn
-                </a>
               </div>
             </div>
           )}

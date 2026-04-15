@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --background: #121212;
+  --background: #ffffff;
 }
 
 html,
 body {
-  background-color: #121212;
-  color: #f0f0f0;
+  background-color: #ffffff;
+  color: #202124;
 }
 
 /* Hide scrollbar utility */

@@ -12,7 +12,7 @@ const config: Config = {
         sans: ["var(--font-geist-sans)", "sans-serif"],
       },
       colors: {
-        background: "#121212",
+        background: "#ffffff",
         "panel-base": "#111",
         "text-primary": "#f0f0f0",
         "text-muted": "#a0a0a0",

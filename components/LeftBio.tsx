@@ -1,9 +1,12 @@
+const TEXT = "#202124";
+
 interface LeftBioProps {
   collapsed?: boolean;
   onClose?: () => void;
 }
 
 export default function LeftBio({ collapsed = false, onClose }: LeftBioProps) {
+  // ── Collapsed: 1-column vertical strip ──────────────────────────────────
   if (collapsed) {
     return (
       <div
@@ -18,7 +21,7 @@ export default function LeftBio({ collapsed = false, onClose }: LeftBioProps) {
           cursor: onClose ? "pointer" : "default",
         }}
       >
-        {/* LinkedIn — top, vertical (mirrors year position) */}
+        {/* LinkedIn — top (mirrors year position) */}
         <a
           href="https://www.linkedin.com/in/tamara-roper-4097abaa"
           target="_blank"
@@ -26,50 +29,54 @@ export default function LeftBio({ collapsed = false, onClose }: LeftBioProps) {
             writingMode: "vertical-rl",
             transform: "rotate(180deg)",
             fontSize: "1rem",
-            color: "#a0a0a0",
+            color: TEXT,
+            opacity: 0.5,
             textDecoration: "none",
             flexShrink: 0,
-            transition: "color 0.2s ease",
+            transition: "opacity 0.2s ease",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "#f0f0f0")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "#a0a0a0")}
+          onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+          onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.5")}
+          onClick={(e) => e.stopPropagation()}
         >
           LinkedIn
         </a>
 
         <div style={{ flex: 1 }} />
 
-        {/* Profile photo — rotated, bleeds to the right */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/images/tr.png"
-          alt=""
+        {/* Name — vertical, centre (replaces photo) */}
+        <span
           style={{
-            width: "100%",
-            height: "auto",
-            display: "block",
+            writingMode: "vertical-rl",
+            transform: "rotate(180deg)",
+            fontSize: "1rem",
+            fontWeight: 500,
+            color: TEXT,
             flexShrink: 0,
-            transform: "rotate(-90deg)",
-            transformOrigin: "left center",
+            whiteSpace: "nowrap",
           }}
-        />
+        >
+          Tamara Roper
+        </span>
 
         <div style={{ flex: 1 }} />
 
-        {/* Email — bottom, vertical (mirrors title position) */}
+        {/* Email — bottom (mirrors title position) */}
         <a
           href="mailto:tamara_r@live.co.uk"
           style={{
             writingMode: "vertical-rl",
             transform: "rotate(180deg)",
             fontSize: "1rem",
-            color: "#a0a0a0",
+            color: TEXT,
+            opacity: 0.5,
             textDecoration: "none",
             flexShrink: 0,
-            transition: "color 0.2s ease",
+            transition: "opacity 0.2s ease",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "#f0f0f0")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "#a0a0a0")}
+          onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+          onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.5")}
+          onClick={(e) => e.stopPropagation()}
         >
           tamara_r@live.co.uk
         </a>
@@ -77,68 +84,82 @@ export default function LeftBio({ collapsed = false, onClose }: LeftBioProps) {
     );
   }
 
-  // Full bio — flex column
+  // ── Expanded: full bio ───────────────────────────────────────────────────
   return (
-    <div className="flex flex-col h-full overflow-hidden">
-      {/* H1 for SEO — visually hidden */}
+    <div
+      className="h-full p-6"
+      style={{ display: "flex", flexDirection: "column" }}
+    >
       <h1 className="sr-only">Tamara Roper</h1>
 
-      <div className="flex flex-col justify-between flex-1 p-6 min-h-0">
-        {/* Top: image only */}
-        <div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/tr.png" width="64" alt="" />
-        </div>
-
-        {/* Bio text */}
-        <div
-          className="text-text-muted"
+      {/* Top-left: name + links */}
+      <div>
+        <p
           style={{
             fontSize: "1rem",
-            maxWidth: "380px",
-            lineHeight: "1.7",
-            fontWeight: 400,
+            fontWeight: 500,
+            color: TEXT,
+            marginBottom: "0.5rem",
           }}
         >
-          <p className="mb-2">Hello.</p>
-          <p className="mb-2">
-            I&apos;m Tamara, currently Associate Copy Director at{" "}
-            <a
-              href="https://saffron-consultants.com/"
-              target="_blank"
-              className="hover:text-text-primary"
-            >
-              Saffron
-            </a>
-            , Madrid.
-          </p>
-          <p>
-            I lead verbal identity across the agency, bridging the gap between
-            strategy and creative, managing and mentoring within a team of 15.
-            In a week, I might consult on campaign ideation, develop full-bodied
-            creative, or present brand narratives to some of the world&apos;s
-            biggest companies.
-          </p>
-        </div>
-
-        {/* Links — below bio text, above marquee */}
-        <div className="flex flex-col gap-1">
+          Tamara Roper
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
           <a
-            className="text-text-muted hover:text-text-primary"
             href="mailto:tamara_r@live.co.uk"
-            style={{ fontSize: "1rem" }}
+            style={{ fontSize: "1rem", color: TEXT, opacity: 0.5, textDecoration: "none", transition: "opacity 0.2s ease" }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.5")}
           >
             tamara_r@live.co.uk
           </a>
           <a
-            className="text-text-muted hover:text-text-primary"
             href="https://www.linkedin.com/in/tamara-roper-4097abaa"
             target="_blank"
-            style={{ fontSize: "1rem" }}
+            style={{ fontSize: "1rem", color: TEXT, opacity: 0.5, textDecoration: "none", transition: "opacity 0.2s ease" }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.5")}
           >
             LinkedIn
           </a>
         </div>
+      </div>
+
+      {/* Spacer */}
+      <div style={{ flex: 1 }} />
+
+      {/* Bottom-left: intro text */}
+      <div
+        style={{
+          fontSize: "1rem",
+          color: TEXT,
+          maxWidth: "380px",
+          lineHeight: "1.7",
+          fontWeight: 400,
+          opacity: 0.7,
+        }}
+      >
+        <p style={{ marginBottom: "0.5rem" }}>Hello.</p>
+        <p style={{ marginBottom: "0.5rem" }}>
+          I&apos;m Tamara, currently Associate Copy Director at{" "}
+          <a
+            href="https://saffron-consultants.com/"
+            target="_blank"
+            style={{ color: TEXT, opacity: 1, textDecoration: "none" }}
+            onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
+            onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
+          >
+            Saffron
+          </a>
+          , Madrid.
+        </p>
+        <p>
+          I lead verbal identity across the agency, bridging the gap between
+          strategy and creative, managing and mentoring within a team of 15. In
+          a week, I might consult on campaign ideation, develop full-bodied
+          creative, or present brand narratives to some of the world&apos;s
+          biggest companies.
+        </p>
       </div>
     </div>
   );
