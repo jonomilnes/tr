@@ -89,7 +89,7 @@ export const projects: Project[] = [
     title: "Ria Money Global",
     year: "2022",
     description: "Long-form content direction for a digital magazine",
-    image: "https://picsum.photos/seed/editorial/800/1200",
+    image: "/images/ria.png",
     galleryImages: [
       "https://picsum.photos/seed/editorial2/1200/800",
       "https://picsum.photos/seed/editorial3/1200/800",
