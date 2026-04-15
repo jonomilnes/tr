@@ -75,15 +75,21 @@ export default function ProjectDetailPanel({
 
           {/* The brief */}
           <p style={SECTION_LABEL}>The brief</p>
-          <p style={SECTION_BODY}>{project.brief}</p>
+          {project.brief.map((para, i) => (
+            <p key={i} style={{ ...SECTION_BODY, marginBottom: i < project.brief.length - 1 ? "1em" : "2rem" }}>{para}</p>
+          ))}
 
           {/* The thinking */}
           <p style={SECTION_LABEL}>The thinking</p>
-          <p style={SECTION_BODY}>{project.thinking}</p>
+          {project.thinking.map((para, i) => (
+            <p key={i} style={{ ...SECTION_BODY, marginBottom: i < project.thinking.length - 1 ? "1em" : "2rem" }}>{para}</p>
+          ))}
 
           {/* The outcome */}
           <p style={SECTION_LABEL}>The outcome</p>
-          <p style={{ ...SECTION_BODY, marginBottom: "3rem" }}>{project.outcome}</p>
+          {project.outcome.map((para, i) => (
+            <p key={i} style={{ ...SECTION_BODY, marginBottom: i < project.outcome.length - 1 ? "1em" : "3rem" }}>{para}</p>
+          ))}
 
           {/* Images stacked at natural proportions */}
           {[project.image, ...project.galleryImages].map((img, i) => {

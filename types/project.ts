@@ -5,7 +5,7 @@ export interface Project {
   description: string;
   image: string;
   galleryImages: string[];
-  brief: string;
-  thinking: string;
-  outcome: string;
+  brief: string[];
+  thinking: string[];
+  outcome: string[];
 }

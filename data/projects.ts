@@ -1,11 +1,14 @@
 import { Project } from "@/types/project";
 
-const PLACEHOLDER_BRIEF =
-  "Placeholder brief. This would describe the client challenge, the context, and what we were asked to solve.";
-const PLACEHOLDER_THINKING =
-  "Placeholder thinking. This would walk through the creative and strategic approach taken to address the brief.";
-const PLACEHOLDER_OUTCOME =
-  "Placeholder outcome. This would describe the result — what was delivered, how it landed, and what it achieved.";
+const PLACEHOLDER_BRIEF = [
+  "Placeholder brief. This would describe the client challenge, the context, and what we were asked to solve.",
+];
+const PLACEHOLDER_THINKING = [
+  "Placeholder thinking. This would walk through the creative and strategic approach taken to address the brief.",
+];
+const PLACEHOLDER_OUTCOME = [
+  "Placeholder outcome. This would describe the result — what was delivered, how it landed, and what it achieved.",
+];
 
 export const projects: Project[] = [
   {

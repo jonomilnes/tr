@@ -97,28 +97,22 @@ export default function MobileGallery({
                     </h2>
 
                     {/* The brief */}
-                    <p style={{ fontSize: "0.65rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.45, marginBottom: "0.4rem" }}>
-                      The brief
-                    </p>
-                    <p style={{ fontSize: "0.95rem", lineHeight: 1.75, marginBottom: "1.5rem" }}>
-                      {project.brief}
-                    </p>
+                    <p style={{ fontSize: "0.65rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.45, marginBottom: "0.4rem" }}>The brief</p>
+                    {project.brief.map((para, i) => (
+                      <p key={i} style={{ fontSize: "0.95rem", lineHeight: 1.75, marginBottom: i < project.brief.length - 1 ? "1em" : "1.5rem" }}>{para}</p>
+                    ))}
 
                     {/* The thinking */}
-                    <p style={{ fontSize: "0.65rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.45, marginBottom: "0.4rem" }}>
-                      The thinking
-                    </p>
-                    <p style={{ fontSize: "0.95rem", lineHeight: 1.75, marginBottom: "1.5rem" }}>
-                      {project.thinking}
-                    </p>
+                    <p style={{ fontSize: "0.65rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.45, marginBottom: "0.4rem" }}>The thinking</p>
+                    {project.thinking.map((para, i) => (
+                      <p key={i} style={{ fontSize: "0.95rem", lineHeight: 1.75, marginBottom: i < project.thinking.length - 1 ? "1em" : "1.5rem" }}>{para}</p>
+                    ))}
 
                     {/* The outcome */}
-                    <p style={{ fontSize: "0.65rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.45, marginBottom: "0.4rem" }}>
-                      The outcome
-                    </p>
-                    <p style={{ fontSize: "0.95rem", lineHeight: 1.75, marginBottom: "2rem" }}>
-                      {project.outcome}
-                    </p>
+                    <p style={{ fontSize: "0.65rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.45, marginBottom: "0.4rem" }}>The outcome</p>
+                    {project.outcome.map((para, i) => (
+                      <p key={i} style={{ fontSize: "0.95rem", lineHeight: 1.75, marginBottom: i < project.outcome.length - 1 ? "1em" : "2rem" }}>{para}</p>
+                    ))}
 
                     {/* Images stacked at natural proportions */}
                     {[project.image, ...project.galleryImages].map(
