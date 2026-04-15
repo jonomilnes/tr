@@ -60,6 +60,19 @@ export default function ProjectDetailPanel({
       >
         <div className="max-w-prose mx-auto w-full" style={{ color: colors.text }}>
 
+          {/* Title */}
+          <h2
+            style={{
+              fontSize: "clamp(1.5rem, 2.5vw, 2.5rem)",
+              fontWeight: 500,
+              letterSpacing: "-0.02em",
+              lineHeight: 1.1,
+              marginBottom: "3rem",
+            }}
+          >
+            {project.title}
+          </h2>
+
           {/* The brief */}
           <p style={SECTION_LABEL}>The brief</p>
           <p style={SECTION_BODY}>{project.brief}</p>

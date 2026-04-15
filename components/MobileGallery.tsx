@@ -83,6 +83,19 @@ export default function MobileGallery({
                   }}
                 >
                   <div style={{ padding: "1rem", color: colors.text }}>
+                    {/* Title */}
+                    <h2
+                      style={{
+                        fontSize: "1.25rem",
+                        fontWeight: 500,
+                        letterSpacing: "-0.02em",
+                        lineHeight: 1.1,
+                        marginBottom: "1.5rem",
+                      }}
+                    >
+                      {project.title}
+                    </h2>
+
                     {/* The brief */}
                     <p style={{ fontSize: "0.65rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.45, marginBottom: "0.4rem" }}>
                       The brief
