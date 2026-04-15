@@ -7,5 +7,5 @@ export interface Project {
   galleryImages: string[];
   brief: string[];
   thinking: string[];
-  output: string[];
+  outcome: string[];
 }

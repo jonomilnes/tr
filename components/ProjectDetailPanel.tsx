@@ -85,10 +85,10 @@ export default function ProjectDetailPanel({
             <p key={i} style={{ ...SECTION_BODY, marginBottom: i < project.thinking.length - 1 ? "1em" : "2rem" }}>{para}</p>
           ))}
 
-          {/* The output */}
-          <p style={SECTION_LABEL}>The output</p>
-          {project.output.map((para, i) => (
-            <p key={i} style={{ ...SECTION_BODY, marginBottom: i < project.output.length - 1 ? "1em" : "3rem" }}>{para}</p>
+          {/* The outcome */}
+          <p style={SECTION_LABEL}>The outcome</p>
+          {project.outcome.map((para, i) => (
+            <p key={i} style={{ ...SECTION_BODY, marginBottom: i < project.outcome.length - 1 ? "1em" : "3rem" }}>{para}</p>
           ))}
 
           {/* Images stacked at natural proportions */}

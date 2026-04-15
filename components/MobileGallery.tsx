@@ -108,10 +108,10 @@ export default function MobileGallery({
                       <p key={i} style={{ fontSize: "0.95rem", lineHeight: 1.75, marginBottom: i < project.thinking.length - 1 ? "1em" : "1.5rem" }}>{para}</p>
                     ))}
 
-                    {/* The output */}
-                    <p style={{ fontSize: "0.65rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.45, marginBottom: "0.4rem" }}>The output</p>
-                    {project.output.map((para, i) => (
-                      <p key={i} style={{ fontSize: "0.95rem", lineHeight: 1.75, marginBottom: i < project.output.length - 1 ? "1em" : "2rem" }}>{para}</p>
+                    {/* The outcome */}
+                    <p style={{ fontSize: "0.65rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.45, marginBottom: "0.4rem" }}>The outcome</p>
+                    {project.outcome.map((para, i) => (
+                      <p key={i} style={{ fontSize: "0.95rem", lineHeight: 1.75, marginBottom: i < project.outcome.length - 1 ? "1em" : "2rem" }}>{para}</p>
                     ))}
 
                     {/* Images stacked at natural proportions */}

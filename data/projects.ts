@@ -1,3 +1,5 @@
+import { Project } from "@/types/project";
+
 export const projects: Project[] = [
   {
     id: "AlphaSense",
@@ -17,7 +19,7 @@ export const projects: Project[] = [
     thinking: [
       "Placeholder",
     ],
-    output: [
+    outcome: [
       "Placeholder",
     ],
   },
@@ -39,7 +41,7 @@ export const projects: Project[] = [
     thinking: [
       "Placeholder",
     ],
-    output: [
+    outcome: [
       "Placeholder",
     ],
   },
@@ -61,7 +63,7 @@ export const projects: Project[] = [
     thinking: [
       "Placeholder",
     ],
-    output: [
+    outcome: [
       "Placeholder",
     ],
   },
@@ -78,7 +80,7 @@ export const projects: Project[] = [
     thinking: [
       "Placeholder",
     ],
-    output: [
+    outcome: [
       "Placeholder",
     ],
   },
@@ -99,7 +101,7 @@ export const projects: Project[] = [
     thinking: [
       "Placeholder",
     ],
-    output: [
+    outcome: [
       "Placeholder",
     ],
   },
@@ -120,7 +122,7 @@ export const projects: Project[] = [
     thinking: [
       "Placeholder",
     ],
-    output: [
+    outcome: [
       "Placeholder",
     ],
   },
