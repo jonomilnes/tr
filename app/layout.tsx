@@ -3,7 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Tamara Roper — Design Portfolio",
+  title: "Tamara Roper — Portfolio",
   description:
     "Associate Copy Director at Saffron, Madrid. Leading verbal identity across strategy and creative.",
 };
