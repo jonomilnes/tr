@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Project } from "@/types/project";
 import { PROJECT_COLORS } from "@/data/colors";
 import { getImageDimensions } from "@/utils/imageHelper";
+import { withBase } from "@/utils/basePath";
 
 interface ProjectDetailPanelProps {
   project: Project;
@@ -97,7 +98,7 @@ export default function ProjectDetailPanel({
             return (
               <div key={i} style={{ marginBottom: "1rem" }}>
                 <Image
-                  src={img}
+                  src={withBase(img)}
                   alt={`${project.title} ${i + 1}`}
                   width={width}
                   height={height}

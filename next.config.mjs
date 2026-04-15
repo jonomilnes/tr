@@ -2,8 +2,12 @@
 const nextConfig = {
   output: "export",
   basePath: "/tr",
+  assetPrefix: "/tr",
+  env: {
+    NEXT_PUBLIC_BASE_PATH: "/tr",
+  },
   images: {
-    unoptimized: true, // required for static export
+    unoptimized: true,
     remotePatterns: [
       { protocol: "https", hostname: "picsum.photos" },
       { protocol: "https", hostname: "fastly.picsum.photos" },

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Project } from "@/types/project";
 import { PROJECT_COLORS } from "@/data/colors";
+import { withBase } from "@/utils/basePath";
 
 interface ProjectPanelProps {
   project: Project;
@@ -110,7 +111,7 @@ export default function ProjectPanel({
         }}
       >
         <Image
-          src={project.image}
+          src={withBase(project.image)}
           alt={project.title}
           fill
           className="object-cover"

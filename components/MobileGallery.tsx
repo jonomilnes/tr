@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Project } from "@/types/project";
 import { PROJECT_COLORS } from "@/data/colors";
 import { getImageDimensions } from "@/utils/imageHelper";
+import { withBase } from "@/utils/basePath";
 
 interface MobileGalleryProps {
   projects: Project[];
@@ -121,7 +122,7 @@ export default function MobileGallery({
                         return (
                           <div key={idx} style={{ marginBottom: "0.75rem" }}>
                             <Image
-                              src={img}
+                              src={withBase(img)}
                               alt={`${project.title} ${idx + 1}`}
                               width={width}
                               height={height}
