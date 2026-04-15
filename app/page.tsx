@@ -50,37 +50,21 @@ export default function Home() {
           }}
         >
           {selectedProject ? (
-            // Compact strip — email left · name centre · LinkedIn right
+            // Compact strip — name only, centred
             <div
               onClick={() => setSelectedProject(null)}
               style={{
                 height: "60px",
                 width: "100%",
-                display: "grid",
-                gridTemplateColumns: "1fr auto 1fr",
+                display: "flex",
                 alignItems: "center",
-                padding: "0 1rem",
+                justifyContent: "center",
                 cursor: "pointer",
               }}
             >
-              <a
-                href="mailto:tamara_r@live.co.uk"
-                style={{ fontSize: "0.85rem", color: "#202124", opacity: 0.5, textDecoration: "none" }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                tamara_r@live.co.uk
-              </a>
               <span style={{ fontSize: "0.95rem", fontWeight: 500, color: "#202124" }}>
                 Tamara Roper
               </span>
-              <a
-                href="https://www.linkedin.com/in/tamara-roper-4097abaa"
-                target="_blank"
-                style={{ fontSize: "0.85rem", color: "#202124", opacity: 0.5, textDecoration: "none", textAlign: "right", justifySelf: "end" }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                LinkedIn
-              </a>
             </div>
           ) : (
             // Full mobile bio
