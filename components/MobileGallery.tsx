@@ -82,49 +82,30 @@ export default function MobileGallery({
                     backgroundColor: colors.bg,
                   }}
                 >
-                  <div style={{ padding: "1rem" }}>
-                    {/* Body */}
-                    <p
-                      style={{
-                        fontSize: "0.95rem",
-                        color: colors.text,
-                        lineHeight: 1.7,
-                        marginBottom: "1.5rem",
-                      }}
-                    >
-                      {project.body}
+                  <div style={{ padding: "1rem", color: colors.text }}>
+                    {/* The brief */}
+                    <p style={{ fontSize: "0.65rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.45, marginBottom: "0.4rem" }}>
+                      The brief
+                    </p>
+                    <p style={{ fontSize: "0.95rem", lineHeight: 1.75, marginBottom: "1.5rem" }}>
+                      {project.brief}
                     </p>
 
-                    {/* Definition list */}
-                    <dl style={{ marginBottom: "2rem" }}>
-                      {[
-                        { label: "Role", value: project.role },
-                        { label: "Client", value: project.client },
-                        { label: "Year", value: project.year },
-                        { label: "Deliverables", value: project.deliverables },
-                      ].map(({ label, value }) => (
-                        <div key={label} style={{ marginBottom: "0.75rem" }}>
-                          <dt
-                            style={{
-                              fontSize: "0.65rem",
-                              fontWeight: 600,
-                              color: colors.text,
-                              opacity: 0.6,
-                              textTransform: "uppercase",
-                              letterSpacing: "0.08em",
-                              marginBottom: "0.15rem",
-                            }}
-                          >
-                            {label}
-                          </dt>
-                          <dd
-                            style={{ fontSize: "0.9rem", color: colors.text }}
-                          >
-                            {value}
-                          </dd>
-                        </div>
-                      ))}
-                    </dl>
+                    {/* The thinking */}
+                    <p style={{ fontSize: "0.65rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.45, marginBottom: "0.4rem" }}>
+                      The thinking
+                    </p>
+                    <p style={{ fontSize: "0.95rem", lineHeight: 1.75, marginBottom: "1.5rem" }}>
+                      {project.thinking}
+                    </p>
+
+                    {/* The outcome */}
+                    <p style={{ fontSize: "0.65rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", opacity: 0.45, marginBottom: "0.4rem" }}>
+                      The outcome
+                    </p>
+                    <p style={{ fontSize: "0.95rem", lineHeight: 1.75, marginBottom: "2rem" }}>
+                      {project.outcome}
+                    </p>
 
                     {/* Images stacked at natural proportions */}
                     {[project.image, ...project.galleryImages].map(

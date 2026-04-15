@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Project } from "@/types/project";
 import { PROJECT_COLORS } from "@/data/colors";
+import { getImageDimensions } from "@/utils/imageHelper";
 
 interface ProjectDetailPanelProps {
   project: Project;
@@ -12,7 +13,20 @@ interface ProjectDetailPanelProps {
 
 const INNER_PADDING = "calc(3 * 100vw / 24)";
 
-import { getImageDimensions } from "@/utils/imageHelper";
+const SECTION_LABEL: React.CSSProperties = {
+  fontSize: "0.65rem",
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: "0.1em",
+  opacity: 0.45,
+  marginBottom: "0.4rem",
+};
+
+const SECTION_BODY: React.CSSProperties = {
+  fontSize: "0.9rem",
+  lineHeight: 1.75,
+  marginBottom: "2rem",
+};
 
 export default function ProjectDetailPanel({
   project,
@@ -44,61 +58,19 @@ export default function ProjectDetailPanel({
           paddingRight: INNER_PADDING,
         }}
       >
-        <div className="max-w-prose mx-auto w-full">
-          {/* Title */}
-          <h2
-            style={{
-              fontSize: "clamp(1.25rem, 2vw, 2rem)",
-              fontWeight: 600,
-              color: colors.text,
-              letterSpacing: "-0.02em",
-              lineHeight: 1.1,
-              marginBottom: "2rem",
-            }}
-          >
-            {project.title}
-          </h2>
+        <div className="max-w-prose mx-auto w-full" style={{ color: colors.text }}>
 
-          {/* Body */}
-          <p
-            style={{
-              fontSize: "0.9rem",
-              color: colors.text,
-              lineHeight: 1.7,
-              marginBottom: "2rem",
-            }}
-          >
-            {project.body}
-          </p>
+          {/* The brief */}
+          <p style={SECTION_LABEL}>The brief</p>
+          <p style={SECTION_BODY}>{project.brief}</p>
 
-          {/* Definition list */}
-          <dl style={{ marginBottom: "3rem" }}>
-            {[
-              { label: "Role", value: project.role },
-              { label: "Client", value: project.client },
-              { label: "Year", value: project.year },
-              { label: "Deliverables", value: project.deliverables },
-            ].map(({ label, value }) => (
-              <div key={label} style={{ marginBottom: "1rem" }}>
-                <dt
-                  style={{
-                    fontSize: "0.65rem",
-                    fontWeight: 600,
-                    color: colors.text,
-                    opacity: 0.6,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.08em",
-                    marginBottom: "0.2rem",
-                  }}
-                >
-                  {label}
-                </dt>
-                <dd style={{ fontSize: "0.9rem", color: colors.text }}>
-                  {value}
-                </dd>
-              </div>
-            ))}
-          </dl>
+          {/* The thinking */}
+          <p style={SECTION_LABEL}>The thinking</p>
+          <p style={SECTION_BODY}>{project.thinking}</p>
+
+          {/* The outcome */}
+          <p style={SECTION_LABEL}>The outcome</p>
+          <p style={{ ...SECTION_BODY, marginBottom: "3rem" }}>{project.outcome}</p>
 
           {/* Images stacked at natural proportions */}
           {[project.image, ...project.galleryImages].map((img, i) => {
